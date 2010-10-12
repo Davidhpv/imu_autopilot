@@ -1,0 +1,21 @@
+This example project uses CMSIS and demonstrates 
+the use of Systick in interrupt driven mode
+
+Board:  Luminary EK-LM3S6965 Evaluation Board
+Device: LM3S6965
+
+Example functionality:                                                   
+ - Clock Settings:
+   - XTAL    =                8.00 MHz
+   - SYSCLK  =               50.00 MHz
+
+The example program is available in different targets:
+  Simulator:   - configured for software Simulator
+  EK-LM3S6965: - runs from Internal Flash located on chip
+
+
+
+-- CMSIS ---------------------------------------------
+SystemInit       called from startup_LM3S.s
+SystemCoreClock  is 50000000Hz
+SysTick          runs in interrupt mode

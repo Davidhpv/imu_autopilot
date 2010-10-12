@@ -1,0 +1,7 @@
+bin
+obj
+build
+*~
+user
+user.mk
+conf/user_conf.h

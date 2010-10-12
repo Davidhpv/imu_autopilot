@@ -1,0 +1,15 @@
+
+PIXHAWK IMU / AUTOPILOT ONBOARD SOFTWARE
+
+========================================
+
+See http://pixhawk.ethz.ch/software/imu/  for details.
+
+The main function is in the file main.c. It contains
+startup code for all airframes. The mainloop for the
+individual airframes is in:
+
+The mainloops for fixed-wing and quadrotors are in:
+
+  main/mainloop-quadrotor.c
+  main/mainloop-fixed-wing.c

@@ -1,0 +1,4 @@
+
+<Project Header="Project 'MCBSTM32E'" Path=".\MCBSTM32E.rprj" Project="Yes" OutputFile="" sate="96" ActiveApp="MCBSTM32E" >
+	<ApplicationBuild Header="MCBSTM32E" Extern=".\MCBSTM32E.rapp" Path=".\MCBSTM32E.rapp" OutputFile=".\Obj\MCBSTM32E.elf" sate="98" />
+</Project>

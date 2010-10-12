@@ -1,0 +1,190 @@
+### uVision2 Project, (C) Keil Software
+### Do not modify !
+
+Target (Simulator), 0x0003 // Tools: 'ARM-GNU'
+Target (MCBSTM32E), 0x0003 // Tools: 'ARM-GNU'
+
+Group (src)
+Group (Documentation)
+
+File 1,1,<.\main_STM32F103.c><main_STM32F103.c>
+File 1,1,<.\system_stm32f10x.c><system_stm32f10x.c>
+File 1,2,<.\startup_stm32f10x_hd.s><startup_stm32f10x_hd.s>
+File 1,1,<../../../CoreSupport/core_cm3.c><core_cm3.c>
+File 2,5,<.\Abstract.txt><Abstract.txt>
+
+
+Options 1,0,0  // Target 'Simulator'
+ Device (STM32F103ZE)
+ Vendor (STMicroelectronics)
+ Cpu (IRAM(0x20000000-0x2000FFFF) IROM(0x8000000-0x807FFFF) CLOCK(8000000) CPUTYPE("Cortex-M3"))
+ FlashUt ()
+ StupF ("STARTUP\ST\STM32F10x.s" ("STM32 Startup Code"))
+ FlashDR (UL2CM3(-O14 -S0 -C0 -N00("ARM Cortex-M3") -D00(1BA00477) -L00(4) -FO7 -FD20000000 -FC800 -FN1 -FF0STM32F10x_512 -FS08000000 -FL080000))
+ DevID (4216)
+ Rgf (stm32f10x_lib.h)
+ Mem ()
+ C ()
+ A ()
+ RL ()
+ OH ()
+ DBC_IFX ()
+ DBC_CMS ()
+ DBC_AMS ()
+ DBC_LMS ()
+ UseEnv=0
+ EnvBin ()
+ EnvInc ()
+ EnvLib ()
+ EnvReg (ST\STM32F10x\)
+ OrgReg (ST\STM32F10x\)
+ TgStat=16
+ OutDir (.\Obj\)
+ OutName (CMSIS_Example)
+ GenApp=1
+ GenLib=0
+ GenHex=0
+ Debug=1
+ Browse=0
+ LstDir (.\Lst\)
+ HexSel=1
+ MG32K=0
+ TGMORE=0
+ RunUsr 0 0 <>
+ RunUsr 1 0 <>
+ BrunUsr 0 0 <>
+ BrunUsr 1 0 <>
+ CrunUsr 0 0 <>
+ CrunUsr 1 0 <>
+ SVCSID <>
+ GLFLAGS=2047
+ GCPUTYP ("Cortex-M3")
+ TFlagsA { 0,12,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
+ OCMARM { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
+ OCMARAM { 0,0,0,0,32,0,0,1,0 }
+ OCMAROM { 1,0,0,0,8,0,0,8,0 }
+ OCMXRAM { 0,0,0,0,0,0,0,0,0 }
+ OCMIRAM2 { 0,0,192,7,32,0,128,0,0 }
+ OCMIROM2 { 0,0,0,0,0,0,0,0,0 }
+ ACCFLG { 65,16,32,16,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
+ ACMISC ()
+ ACDEFN (STM32F10X_HD DATA_IN_ExtSRAM)
+ ACUDEF ()
+ ACINCD (../../../CoreSupport; ../../../DeviceSupport/ST/STM32F10x)
+ AASFLG { 4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
+ AAMISC ()
+ AADEFN ()
+ AAUDEF ()
+ AAINCD ()
+ PropFld { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
+ IncBld=1
+ AlwaysBuild=0
+ GenAsm=0
+ AsmAsm=0
+ PublicsOnly=0
+ StopCode=3
+ CustArgs ()
+ LibMods ()
+ ALDFLAG { 3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
+ ALDTADR ()
+ ALDDADR ()
+ ALDBSSR ()
+ ALDICLB ()
+ ALDICDR ()
+ ALDMISC ()
+ ALDSCAT (.\STM32F103.ld)
+  OPTDL (SARMCM3.DLL)()(DARMSTM.DLL)(-pSTM32F103ZE)(SARMCM3.DLL)()(TARMSTM.DLL)(-pSTM32F103ZE)
+  OPTDBG 48125,1,()()()()()()()()()() (BIN\UL2CM3.DLL)()()()
+ FLASH1 { 1,0,0,0,0,0,0,0,255,255,255,255,0,0,0,0,0,0,0,0 }
+ FLASH2 ()
+ FLASH3 ()
+ FLASH4 ()
+EndOpt
+
+Options 2,0,0  // Target 'MCBSTM32E'
+ Device (STM32F103ZE)
+ Vendor (STMicroelectronics)
+ Cpu (IRAM(0x20000000-0x2000FFFF) IROM(0x8000000-0x807FFFF) CLOCK(8000000) CPUTYPE("Cortex-M3"))
+ FlashUt ()
+ StupF ("STARTUP\ST\STM32F10x.s" ("STM32 Startup Code"))
+ FlashDR (UL2CM3(-O14 -S0 -C0 -N00("ARM Cortex-M3") -D00(1BA00477) -L00(4) -FO7 -FD20000000 -FC800 -FN1 -FF0STM32F10x_512 -FS08000000 -FL080000))
+ DevID (4216)
+ Rgf (stm32f10x_lib.h)
+ Mem ()
+ C ()
+ A ()
+ RL ()
+ OH ()
+ DBC_IFX ()
+ DBC_CMS ()
+ DBC_AMS ()
+ DBC_LMS ()
+ UseEnv=0
+ EnvBin ()
+ EnvInc ()
+ EnvLib ()
+ EnvReg (ST\STM32F10x\)
+ OrgReg (ST\STM32F10x\)
+ TgStat=16
+ OutDir (.\Obj\)
+ OutName (CMSIS_Example)
+ GenApp=1
+ GenLib=0
+ GenHex=0
+ Debug=1
+ Browse=0
+ LstDir (.\Lst\)
+ HexSel=1
+ MG32K=0
+ TGMORE=0
+ RunUsr 0 0 <>
+ RunUsr 1 0 <>
+ BrunUsr 0 0 <>
+ BrunUsr 1 0 <>
+ CrunUsr 0 0 <>
+ CrunUsr 1 0 <>
+ SVCSID <>
+ GLFLAGS=2047
+ GCPUTYP ("Cortex-M3")
+ TFlagsA { 0,12,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
+ OCMARM { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
+ OCMARAM { 0,0,0,0,32,0,0,1,0 }
+ OCMAROM { 1,0,0,0,8,0,0,8,0 }
+ OCMXRAM { 0,0,0,0,0,0,0,0,0 }
+ OCMIRAM2 { 0,0,192,7,32,0,128,0,0 }
+ OCMIROM2 { 0,0,0,0,0,0,0,0,0 }
+ ACCFLG { 65,16,32,16,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
+ ACMISC ()
+ ACDEFN (STM32F10X_HD DATA_IN_ExtSRAM)
+ ACUDEF ()
+ ACINCD (../../../CoreSupport; ../../../DeviceSupport/ST/STM32F10x)
+ AASFLG { 4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
+ AAMISC ()
+ AADEFN ()
+ AAUDEF ()
+ AAINCD ()
+ PropFld { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
+ IncBld=1
+ AlwaysBuild=0
+ GenAsm=0
+ AsmAsm=0
+ PublicsOnly=0
+ StopCode=3
+ CustArgs ()
+ LibMods ()
+ ALDFLAG { 3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
+ ALDTADR ()
+ ALDDADR ()
+ ALDBSSR ()
+ ALDICLB ()
+ ALDICDR ()
+ ALDMISC ()
+ ALDSCAT (.\STM32F103.ld)
+  OPTDL (SARMCM3.DLL)()(DARMSTM.DLL)(-pSTM32F103ZE)(SARMCM3.DLL)()(TARMSTM.DLL)(-pSTM32F103ZE)
+  OPTDBG 49150,1,()()()()()()()()()() (BIN\UL2CM3.DLL)()()()
+ FLASH1 { 1,0,0,0,1,0,0,0,1,16,0,0,0,0,0,0,0,0,0,0 }
+ FLASH2 (BIN\UL2CM3.DLL)
+ FLASH3 ("" ())
+ FLASH4 ()
+EndOpt
+

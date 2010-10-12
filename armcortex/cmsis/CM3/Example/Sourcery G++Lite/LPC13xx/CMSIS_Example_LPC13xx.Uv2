@@ -1,0 +1,102 @@
+### uVision2 Project, (C) Keil Software
+### Do not modify !
+
+Target (MCB1000), 0x0003 // Tools: 'ARM-GNU'
+
+Group (src)
+Group (Documentation)
+
+File 1,1,<../../../CoreSupport/core_cm3.c><core_cm3.c>
+File 1,2,<.\startup_LPC13xx.s><startup_LPC13xx.s>
+File 1,1,<.\system_LPC13xx.c><system_LPC13xx.c>
+File 1,1,<.\main_LPC13xx.c><main_LPC13xx.c>
+File 2,5,<.\Abstract.txt><Abstract.txt>
+
+
+Options 1,0,0  // Target 'MCB1000'
+ Device (LPC1343)
+ Vendor (NXP (founded by Philips))
+ Cpu (IRAM(0x10000000-0x10001FFF) IROM(0-0x7FFF) CLOCK(12000000) CPUTYPE("Cortex-M3"))
+ FlashUt ()
+ StupF ("STARTUP\NXP\LPC13xx\startup_LPC13xx.s" ("NXP LPC13xx Startup Code"))
+ FlashDR (UL2CM3(-UV0446D8E -O463 -S0 -C0 -N00("ARM CoreSight SW-DP") -D00(2BA01477) -L00(0) -TO18 -TC10000000 -TP21 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO7 -FD10000000 -FC800 -FN1 -FF0LPC13xx_32 -FS00 -FL08000))
+ DevID (4919)
+ Rgf (LPC13xx.h)
+ Mem ()
+ C ()
+ A ()
+ RL ()
+ OH ()
+ DBC_IFX ()
+ DBC_CMS ()
+ DBC_AMS ()
+ DBC_LMS ()
+ UseEnv=0
+ EnvBin ()
+ EnvInc ()
+ EnvLib ()
+ EnvReg (NXP\LPC13xx\)
+ OrgReg (NXP\LPC13xx\)
+ TgStat=16
+ OutDir (.\Obj\)
+ OutName (CMSIS_Example)
+ GenApp=1
+ GenLib=0
+ GenHex=0
+ Debug=1
+ Browse=0
+ LstDir (.\Lst\)
+ HexSel=1
+ MG32K=0
+ TGMORE=0
+ RunUsr 0 0 <>
+ RunUsr 1 0 <>
+ BrunUsr 0 0 <>
+ BrunUsr 1 0 <>
+ CrunUsr 0 0 <>
+ CrunUsr 1 0 <>
+ SVCSID <>
+ GLFLAGS=2047
+ GCPUTYP ("Cortex-M3")
+ TFlagsA { 0,12,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
+ OCMARM { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
+ OCMARAM { 0,0,0,0,16,0,32,0,0 }
+ OCMAROM { 1,0,0,0,0,0,128,0,0 }
+ OCMXRAM { 0,0,0,0,0,0,0,0,0 }
+ OCMIRAM2 { 0,0,192,7,32,0,128,0,0 }
+ OCMIROM2 { 0,0,0,0,0,0,0,0,0 }
+ ACCFLG { 65,16,32,16,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
+ ACMISC ()
+ ACDEFN ()
+ ACUDEF ()
+ ACINCD (../../../CoreSupport; ../../../DeviceSupport/NXP/LPC13xx)
+ AASFLG { 4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
+ AAMISC ()
+ AADEFN ()
+ AAUDEF ()
+ AAINCD ()
+ PropFld { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
+ IncBld=1
+ AlwaysBuild=0
+ GenAsm=0
+ AsmAsm=0
+ PublicsOnly=0
+ StopCode=3
+ CustArgs ()
+ LibMods ()
+ ALDFLAG { 3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
+ ALDTADR ()
+ ALDDADR ()
+ ALDBSSR ()
+ ALDICLB ()
+ ALDICDR ()
+ ALDMISC ()
+ ALDSCAT (.\LPC13xx.ld)
+  OPTDL (SARMCM3.DLL)(-MPU)(DARMP1.DLL)(-pLPC1343)(SARMCM3.DLL)(-MPU)(TARMP1.DLL)(-pLPC1343)
+  OPTDBG 49150,1,()()()()()()()()()() (BIN\UL2CM3.DLL)()()()
+ FLASH1 { 1,0,0,0,1,0,0,0,1,16,0,0,0,0,0,0,0,0,0,0 }
+ FLASH2 (BIN\UL2CM3.DLL)
+ FLASH3 ("" ())
+ FLASH4 ()
+EndOpt
+

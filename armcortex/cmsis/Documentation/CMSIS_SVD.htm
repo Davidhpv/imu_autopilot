@@ -1,0 +1,919 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html xmlns:p="urn:schemas-microsoft-com:office:powerpoint" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office"><head>
+  
+  <title>CMSIS - SVD: Cortex Microcontroller Software Interface Standard - System View Description</title><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+  <meta name="ProgId" content="FrontPage.Editor.Document">
+  <style>
+
+<!--
+/*-----------------------------------------------------------Keil Software CHM Style Sheet-----------------------------------------------------------*/
+body { color: #000000; background-color: #FFFFFF; font-size: 75%; font-family: Verdana, Arial, 'Sans Serif' }
+a:link { color: #0000FF; text-decoration: underline }
+a:visited { color: #0000FF; text-decoration: underline }
+a:active { color: #FF0000; text-decoration: underline }
+a:hover { color: #FF0000; text-decoration: underline }
+h1 { font-family: Verdana; font-size: 18pt; color: #000080; font-weight: bold; text-align: Center; margin-right: 3 }
+h2 { font-family: Verdana; font-size: 14pt; color: #000080; font-weight: bold; background-color: #CCCCCC; margin-top: 24; margin-bottom: 3; padding: 6 }
+h3 { font-family: Verdana; font-size: 10pt; font-weight: bold; background-color: #CCCCCC; margin-top: 24; margin-bottom: 3; padding: 6 }
+pre { font-family: Courier New; font-size: 10pt; background-color: #CCFFCC; margin-left: 24; margin-right: 24 }
+ul { list-style-type: square; margin-top: 6pt; margin-bottom: 0 }
+ol { margin-top: 6pt; margin-bottom: 0 }
+li { clear: both; margin-bottom: 6pt }
+table { font-size: 100%; border-width: 0; padding: 0 }
+th { color: #FFFFFF; background-color: #000080; text-align: left; vertical-align: bottom; padding-right: 6pt }
+tr { text-align: left; vertical-align: top }
+td { text-align: left; vertical-align: top; padding-right: 6pt }
+.ToolT { font-size: 8pt; color: #808080 }
+.TinyT { font-size: 8pt; text-align: Center }
+code { color: #000000; background-color: #E0E0E0; font-family: 'Courier New', Courier; line-height: 120%; font-style: normal }
+/*-----------------------------------------------------------Notes-----------------------------------------------------------*/
+p.note { font-weight: bold; clear: both; margin-bottom: 3pt; padding-top: 6pt }
+/*-----------------------------------------------------------Expanding/Contracting Divisions-----------------------------------------------------------*/
+#expand { text-decoration: none; margin-bottom: 3pt }
+img.expand { border-style: none; border-width: medium }
+div.expand { display: none; margin-left: 9pt; margin-top: 0 }
+/*-----------------------------------------------------------Where List Tags-----------------------------------------------------------*/
+p.wh { font-weight: bold; clear: both; margin-top: 6pt; margin-bottom: 3pt }
+table.wh { width: 100% }
+td.whItem { white-space: nowrap; font-style: italic; padding-right: 6pt; padding-bottom: 6pt }
+td.whDesc { padding-bottom: 6pt }
+/*-----------------------------------------------------------Keil Table Tags-----------------------------------------------------------*/
+table.kt { width: 100%; border: 1pt solid #000000 }
+th.kt { white-space: nowrap; border-bottom: 1pt solid #000000; padding-left: 6pt; padding-right: 6pt; padding-top: 4pt; padding-bottom: 4pt }
+tr.kt { }
+td.kt { color: #000000; background-color: #E0E0E0; border-top: 1pt solid #A0A0A0; padding-left: 6pt; padding-right: 6pt; padding-top: 2pt; padding-bottom: 2pt }
+/*----------------------------------------------------------------------------------------------------------------------*/
+    .O
+	{color:#1D315B;
+	font-size:149%;}
+    .t{color:#990000}
+.m{color:blue}
+.style2 {
+				font-size: larger;
+}
+.style3 {
+				margin-left: 40px;
+}
+.style4 {
+				margin-left: 80px;
+}
+.style5 {
+				margin-left: 120px;
+}
+.style6 {
+				margin-left: 160px;
+}
+    .style7 {
+				list-style-type: circle;
+}
+.style8 {
+				background-color: #CCFFCC;
+}
+.style9 {
+				background-color: #CCCCCC;
+}
+
+.style10 {
+				color: #008000;
+}
+
+.style11 {
+				color: #000000;
+}
+
+-->
+
+</style></head>
+
+<body>
+<h1>Cortex Microcontroller Software Interface Standard<br>
+System View Description</h1>
+
+<p align="center">This file describes the Cortex Microcontroller Software 
+Interface Standard - System View Description (CMSIS - SVD) concept and syntax proposal.</p>
+<p align="center">Version: 0.9 - 26. February 2010</p>
+
+<p class="TinyT">Information in this file, the accompany manuals, and software is<br>
+                 Copyright © ARM Ltd.<br>All rights reserved.
+</p>
+
+<hr>
+
+<p><span style="FONT-WEIGHT: bold">Revision History</span></p>
+<ul>
+	<li>Version 0.9: initial proposal.</li>
+</ul>
+
+<hr>
+
+<h2>Contents</h2>
+
+<ol>
+  <li class="LI2"><a href="#1">About</a></li>
+  <li class="LI2"><a href="#2">Motivation</a></li>
+  <li class="LI2"><a href="#3">Requirements</a></li>
+  <li class="LI2"><a href="#4">Format</a></li>
+  <li class="LI2"><a href="#5">Example</a></li>
+  <li class="LI2"><a href="#6">Questions &amp; Answers</a></li>
+</ol>
+
+<h2><a name="1"></a>About</h2>
+
+<p>
+  The <strong>Cortex Microcontroller Software Interface Standard - System View 
+	Description</strong> (CMSIS - SVD) answers the challenges
+  of accurate, detailed and timely device aware debugging support for new Cortex 
+	Microcontroller based devices by the software development 
+	tools vendor community.
+</p>
+<p>
+  Silicon vendors shall create and maintain a formal description 
+	of the programmer's view for all the peripherals contained in their Cortex 
+	Microcontroller based devices. Tool vendors use such descriptions to 
+	establish device support in their debugging tools with minimal turn around times and 
+	manageable effort. Device support across many development tools&nbsp; is 
+	essential for silicon provider in order to promote new devices and device 
+	variants entering the market. Device aware debugging provides fast and 
+	convenient access to intuitive peripheral status and configuration 
+	information. This enables software developer to 
+	develop and debug code most efficiently and adopt new devices easily and early.</p>
+<p>
+  A standardized System View Description shall provides a common approach to 
+	capturing peripheral debug related information in a file. The scope of the contained information is 
+	agreed to match the level usually provided by silicon vendors in their 
+	device reference manuals, however in a formalized XML based format.</p>
+<p>
+  Device aware debugging support is only one aspect of the overall device 
+	support required by software development environments, however it is one of 
+	the most time consuming and error prone ones.</p>
+<h2><a name="2"></a>Motivation</h2>
+<p>
+
+The software developer of microcontroller devices is faced with a growing number 
+of devices with an ever increasing number of peripheral blocks providing a wide 
+range of distinct and complex functionality. The development of drivers for 
+these peripherals plays a dominant part in the overall product development 
+cycle. Modern debuggers are 
+supporting the software developer in getting the software to work 
+correctly eventually. A debugger providing peripheral awareness improves the 
+ability to access and interpret complex configuration and status information of 
+peripherals quickly and conveniently thus improving the development efficiency. 
+Even though this is only one aspect of device support within microcontroller 
+development environments it is essential for the successful and timely adoption 
+of development tools and the device by the market.</p>
+<p>Today software development environments address the topic of device aware 
+debugging in various ways. What they do have in common though is the fact that 
+they depend either on human readable device documentation or peripheral 
+register information provided by silicon vendors in a proprietary file format. 
+Extracting peripheral information from written documentation is a very time 
+consuming, tedious and error prone task. Having a file containing peripheral specific information to generate peripheral views is a 
+significant step forward in making device support more affordable, reliable and timely. 
+However the challenge for the tools provider remains to support the many 
+different file formats from a growing number of silicon vendors. But also for 
+silicon vendors it is time consuming and costly to engage with many tool 
+provider in order to achieve device support in a wide range of development 
+environments.&nbsp; </p>
+<p>Standardizing on a System View Description aims to ease this challenge 
+by agreeing on a formal XML-based file format. In conjunction with supporting web server infrastructure silicon partner 
+shall upload and maintain such descriptions in a tool vendor agnostic device 
+database hosted by the web server infrastructure <a href="http://www.onARM.com">
+www.onARM.com</a> . Access control to the information is managed on a per user 
+basis. This allows silicon vendors to provide information for devices that have 
+not been made public.&nbsp; </p>
+<p>This approach provides benefits for silicon and tool vendors as well as 
+software developers of Cortex Microcontroller</p>
+<ul>
+  <li>timely and accurate device support provided by a whole range of tool provider </li>
+	<li>tool provider become more efficient in supporting a multitude of devices 
+	and device variants</li>
+	<li>less interaction required between the silicon provider and the different 
+	tool provider</li>
+	<li>silicon provider has control over and maintains the System View 
+	Description during the life cycle of the device</li>
+	<li>high quality device support in terms of completeness and correctness of 
+	device aware debugging</li>
+	<li>improved productivity and user experience of the software developer</li>
+</ul>
+<h2><a name="3"></a>Requirements</h2>
+<p>The debug description shall capture the relevant information about all 
+the peripherals contained in a specific device. This section describes what 
+items of information are deemed relevant. The expectation is that the 
+information is provided by the silicon vendor and would equally be available 
+from device reference manuals. Since the documentation is assumed to be generated from some sort of database 
+the System View Description is structured such that it is straight forward 
+to be generated.</p>
+<h4>Required content of the description</h4>
+<p>From a programmer's perspective a peripheral can be seen as a set of registers 
+with unique<em> names</em> being mapped to fixed<em> addresses</em> allocated 
+within a defined <em>range</em> of an address space.</p>
+<p>From a debugger's point of view read accesses to a physical register need to be 
+executed in order to display its current state. The debugger executes a write 
+access to a register when a user edits its value. For this purpose the debugger 
+needs to know about the following additional register attributes: </p>
+<ul>
+				<li><em>register size</em> = number of bits (Cortex MCUs usually 
+				32 bits)</li>
+				<li><em>access permission</em> = read and write, read only, 
+				write only</li>
+				<li><em>access size</em> supported = byte, half-word, word, 
+				double word</li>
+</ul>
+<p>In many cases peripheral registers are partitioned into chunks of bits of 
+distinct functionality. These chunks are referred to as bit-fields. Each 
+register that consists of bit-fields shall have an attribute containing the list 
+of <em>uniquely named</em> bit-fields (Note: bit-field names are not required to 
+be unique across registers). In order for the debugger to extract the 
+value of a bit-field from the corresponding register the following bit-field 
+attributes are required:</p>
+<ul>
+				<li><em>most significant bit </em>= highest bit position of the 
+				bit-field in the corresponding register</li>
+				<li><em>least significant bit</em> = lowest bit position of the 
+				bit-field within the corresponding register</li>
+				<li><em>access permission</em> = read and write, read only, 
+				write only</li>
+</ul>
+<p>An enumeration maps every value to a specific description string. Therefore 
+the value state of a bit-field can be replaced by a descriptive text thus 
+avoiding the necessity of a look-up in the device reference manual. Each item of 
+an enumeration has the following attributes:</p>
+<ul>
+				<li><em>value</em> = value of the bit-field that corresponds to 
+				the string attribute</li>
+				<li><em>string = </em>string that describes the semantics of a 
+				bit-field when it holds the corresponding value</li>
+</ul>
+<p>The overall structure of the description becomes most intuitive if it is 
+semantically ordered. The following hierarchy of items allows 
+an efficient way of locating a specific peripheral register and its related information:</p>
+<p><strong>Device =</strong></p>
+<ul class="style7">
+				<li>
+				<p class="style3"><strong>- Peripheral Group</strong></p>
+				</li>
+				<li>
+				<p class="style4"><strong>- Peripheral</strong></p>
+				</li>
+				<li>
+				<p class="style5"><strong>- Register</strong></p>
+				</li>
+				<li>
+				<p class="style6"><strong>- Bit Field</strong></p>
+				<ul class="style7">
+								<li>
+								<p class="style6"><strong>- Enumeration</strong></p>
+								</li>
+				</ul>
+				</li>
+</ul>
+<p>Devices consists of a set of peripherals. In many cases there are multiple 
+instances of the same peripheral in a device (e.g. Timer0, Timer1, etc.) or a number of peripherals provide 
+similar functionality (e.g. Timer). Therefore collecting such similar or related peripherals 
+into groups helps structuring the list of peripherals providing a better 
+overview. A peripheral itself contains 
+a list of registers, where each register may be composed from bit fields.</p>
+<p>Each of the items (i.e. Device, Peripheral Group, Peripheral, Register and 
+Bit Field) owns an attribute <em>description</em>. The description field plays 
+an important part in improving the software development productivity. Instead of 
+searching through the reference manual the detailed explanation from the manual 
+becomes immediately accessible from within the development environment.</p>
+<p>Details about the exact display format and layout of the peripheral view are 
+considered beyond the scope of the description. It is up to the tool vendor to 
+visualize the contained information appropriately. The creation of the&nbsp; 
+System View Description shall not create an unnecessary burden for the 
+silicon vendor and only contain device detail that is already available. A 
+description consistency checker is required and need to be run prior to 
+publishing System View Description files.</p>
+
+<h2><a name="4"></a><span class="style9">Format</span></h2>
+
+<p>
+  The following section describes the outline of the proposed file format. The aim is to 
+	use a straight forward and simple format which is not optimized for size nor 
+	convenience in terms of writing it by hand. The assumption is being made that&nbsp;this file gets generated from a existing database or converted from 
+	another file format. The simplicity however aids the readability, and allows 
+	local editing. Modifications are likely to be necessary in multiple places 
+	due to the lack of description reuse. The System View Description is XML based. </p>
+<h4>&lt;device&gt;</h4>
+<p>&nbsp;&nbsp; &lt;name&gt;<em> string </em>&lt;/name&gt;<br>
+&nbsp;&nbsp; &lt;description&gt; <em>string</em> &lt;/description&gt;<br>
+&nbsp;&nbsp; &lt;version&gt;<em> string </em>&lt;/version&gt;<br>
+<span class="style10">&nbsp;&nbsp; &lt;register_size&gt;<em> value </em>&lt;/register_size&gt;</span></p>
+<p>&nbsp;&nbsp; &lt;peripheral_group&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;name&gt; <em>string(&quot;GroupA&quot;) </em>&lt;/name&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ...<br>
+&nbsp;&nbsp; &lt;/peripheral_group&gt;</p>
+<p>&nbsp;&nbsp; ...&nbsp;</p>
+<p>&nbsp;&nbsp; &lt;peripheral_group&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;name&gt; <em>string(&quot;GroupZ&quot;) </em>&lt;/name&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ...<br>
+&nbsp;&nbsp; &lt;/peripheral_group&gt;</p>
+<h4>&lt;/device&gt;</h4>
+<p>The device provides the outermost frame of the description. All other 
+elements like peripherals and registers are described inside of this scope. A device contains one or more peripheral groups (i.e. 
+&quot;GroupA&quot; to &quot;GroupZ&quot;).&nbsp; It is possible for a single file to contain 
+multiple descriptions of different devices or device variants.</p>
+<p>Mandatory items:<br>
+<strong>name = </strong>unique name string used to identify the device<strong><br>
+description = </strong>string describing details of the device<br>
+<strong>version = </strong>string defining the version of the device 
+description. Silicon provider will be able to maintain this description 
+throughout the lifecycle of the device.<strong><br>
+peripheral_group = </strong>next lower level of description (see next section 
+for details)</p>
+<p>Optional item:<br>
+<strong>register_size = </strong>unsigned integer defining the default bit-width 
+of all registers of this device. Registers that match the default register size 
+defined for the device do not need to provide the size attribute on the register 
+level. Registers of different size redefine the register size on the lower 
+levels.</p>
+<h4>Example:</h4>
+<pre>&lt;device&gt;
+  &lt;name&gt;Cortex-M3_Sample&lt;/name&gt;
+  &lt;description&gt;ARM Cortex-M3 based Microcontroller dummy device&lt;/description&gt;
+  &lt;version&gt;0.1&lt;/version&gt;
+  &lt;peripheral_group&gt;
+    &lt;name&gt;Timer&lt;/name&gt;
+    ...
+  &lt;/periphersl_group&gt;
+  &lt;peripheral_group&gt;
+    &lt;name&gt;GPIO&lt;/name&gt;
+    ...
+  &lt;/peripheral_group&gt;
+  ...
+&lt;/device&gt;</pre>
+<hr>
+<h4>&lt;peripheral_group&gt;</h4>
+<p>&nbsp;&nbsp; &lt;name&gt;<em> string </em>&lt;/name&gt;<br>
+&nbsp;&nbsp; &lt;description&gt; <em>string</em> &lt;/description&gt;<br>
+</p>
+<p>&nbsp;&nbsp; &lt;peripheral&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;name&gt; <em>string(&quot;PeripheralA&quot;) </em>&lt;/name&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ...<br>
+&nbsp;&nbsp; &lt;/peripheral&gt;&nbsp;</p>
+<p>&nbsp;&nbsp; ...</p>
+<p>&nbsp;&nbsp; &lt;peripheral&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;name&gt; <em>string(&quot;PeripheralZ&quot;</em>) &lt;/name&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ...<br>
+&nbsp;&nbsp; &lt;/peripheral&gt;&nbsp;</p>
+<h4>&lt;/peripheral_group&gt;</h4>
+<p>A peripheral group encloses the description of one or more peripherals (e.g. 
+&quot;PeripheralA&quot; to 
+&quot;PeripheralZ&quot;) belonging to this 
+group. Peripheral is the next lower level</p>
+<p>Mandatory items:<br>
+<strong>name = </strong>unique name string used to identify the peripheral group<br>
+<strong>description = </strong>string describing details of the peripheral group<br>
+<strong>peripheral = </strong>next lower level of description (see next section 
+for details)</p>
+<h4>Example:</h4>
+<pre>...&nbsp;
+  &lt;peripheral_group&gt;
+    &lt;name&gt;Timer&lt;/name&gt;
+    &lt;description&gt;The Timer group contains simple timer and complex timer as well as the watchdog timer&lt;/description&gt;
+    &lt;peripheral&gt;
+      &lt;name&gt;Timer0&lt;/name&gt;
+      ...
+    &lt;/peripheral&gt;
+    &lt;peripheral&gt;
+      &lt;name&gt;Timer1&lt;/name&gt;
+      ...
+    &lt;/peripheral&gt;
+
+    ...
+
+    &lt;peripheral&gt;
+      &lt;name&gt;WDog&lt;/name&gt;
+      ...
+    &lt;/peripheral&gt;
+  &lt;/peripheral_group&gt;
+...</pre>
+<hr>
+<h4>&lt;peripheral&gt;</h4>
+<p>&nbsp;&nbsp; &lt;name&gt;<em> string </em>&lt;/name&gt;<br>
+&nbsp;&nbsp; &lt;description&gt;<em> string </em>&lt;/description&gt;<br>
+&nbsp;&nbsp; &lt;base_address&gt;<em> value </em>&lt;/base_address&gt;<br>
+&nbsp;&nbsp; <span class="style10">&lt;end_address&gt;<em> value </em>&lt;/end_address&gt;
+<strong>or</strong> &lt;size&gt;<em> value </em>&lt;/size&gt;</span><br>
+</p>
+<p>&nbsp;&nbsp; &lt;register&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;name&gt; <em>string(&quot;RegA&quot;) </em>&lt;/name&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ...<br>
+&nbsp;&nbsp; &lt;/register&gt;</p>
+<p>&nbsp;&nbsp; ...</p>
+<p>&nbsp;&nbsp; &lt;register&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;name&gt; <em>string(&quot;RegZ&quot;)</em>&lt;/name&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ...<br>
+&nbsp;&nbsp; &lt;/register&gt;</p>
+<h4>&lt;/peripheral&gt;</h4>
+<p>A peripheral encloses the description of one or more registers belonging to this named 
+peripheral. The address range allocated in the address space for this peripheral 
+can be either defined through base_address and end_address or through 
+base_address and size. The address range information allows to display a memory 
+map overview for all peripherals.</p>
+<p>Mandatory items:<br>
+<strong>name = </strong>name string used to identify the peripheral. Peripheral 
+names are required to be unique within the scope of a peripheral group.<br>
+<strong>description = </strong>string describing details of the peripheral.<br>
+<strong>base_address = </strong>value defining the lowest address reserved in 
+the address space for this peripheral.<br>
+<strong>register = </strong>next lower level of description (see next section 
+for details)</p>
+<p>Optional items:<strong><br>
+end_address = </strong>value defining the highest address reserved in the 
+address space for this peripheral.<br>
+<strong>size = </strong>value defining the number of addressable units reserved 
+in the address space for this peripheral.<br>
+The above optional items have to be used mutually exclusive.</p>
+<h4>Example:</h4>
+<pre>...&nbsp;
+    &lt;peripheral&gt;
+       &lt;name&gt;Timer0&lt;/name&gt;
+       &lt;description&gt;Timer 0 is a simple 16 bit timer counting down ... &lt;/description&gt;
+       &lt;base_address&gt;0x40000000&lt;/base_address&gt;
+       &lt;end_address&gt;0x400003ff&lt;/end_address&gt;
+       &lt;!-- alternatively to end_address size could be used: &lt;size&gt;0x400&lt;/size&gt; --&gt;
+       &lt;register&gt;
+         &lt;name&gt;TimerCtrl0&lt;/name&gt;
+         ...
+       &lt;/register&gt;
+
+       ...
+ 
+       &lt;register&gt;
+         &lt;name&gt;TimerCount0&lt;/name&gt;
+         ...
+       &lt;/register&gt;
+     &lt;/peripheral&gt;
+...</pre>
+<hr>
+<h4>&lt;register&gt;</h4>
+<p>&nbsp;&nbsp; &lt;name&gt;<em> string </em>&lt;/name&gt;<br>
+&nbsp;&nbsp; &lt;description&gt;<em> string </em>&lt;/description&gt;<br>
+&nbsp;&nbsp; &lt;address&gt;<em> value </em>&lt;/address&gt; <strong>or</strong> 
+&lt;offset&gt; <em>value </em>&lt;/offset&gt;<br>
+&nbsp;&nbsp; &lt;size&gt; <em>value </em>&lt;/size&gt;<br>
+&nbsp;&nbsp; &lt;access_permission&gt;<em> predefined strings </em>&lt;/access_permission&gt;<br>
+&nbsp;&nbsp; &lt;access_types&gt;<em> values </em>&lt;/access_types&gt;<br>
+&nbsp;&nbsp; <span class="style10">&lt;reset_value&gt;<em> value </em>&lt;/reset_value&gt;</span></p>
+
+<p class="style11">&nbsp;&nbsp; &lt;bitfield&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;name&gt; <em>string(&quot;FieldA&quot;)</em> &lt;/name&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ...<br>
+&nbsp;&nbsp; &lt;/bitfield&gt; </p>
+<p>&nbsp;&nbsp; ...</p>
+<p>&nbsp;&nbsp; &lt;bitfield&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;name&gt; <em>string(&quot;FieldZ&quot;)</em> &lt;/name&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ...<br>
+&nbsp;&nbsp; &lt;/bitfield&gt;</p>
+<h4>&lt;/register&gt;</h4>
+<p>The definition of registers is the central part of the description. A 
+register may use its complete size for a single purpose and therefore not 
+include any bit-field description sections. Otherwise the explicit description 
+of bit-fields is mandatory.</p>
+<p>Mandatory items:<br>
+<strong>name = </strong>name string used to identify the register. Register 
+names are required to be unique within the scope of a peripheral.<br>
+<strong>description = </strong>string describing the details of the register.<br>
+<strong>address = </strong>value defining the absolute address of the register 
+in the address space.<br>
+<strong>offset = </strong>value defining the address of the register relative to 
+the base_address defined by the peripheral the register belongs to.<br>
+(address and offset have to be used mutually exclusive)<br>
+<strong>size =</strong>value defining the bit-width of the register.<br>
+<strong>access_permission =</strong> predefined strings defining the allowed 
+accesses for this register: <strong>RO</strong> = read only, <strong>WO</strong> 
+= write only, <strong>RW</strong> = read write.<br>
+<strong>access_types =</strong>comma separated values defining the allowed 
+access sizes to this register: <strong>1</strong> = byte,<strong> 2 </strong>= 
+half-word,<strong> 4 </strong>= word, <strong>8</strong> = double word.<br>
+<strong>bitfield = </strong>next lower level of description (see next section 
+for details).</p>
+<p>Optional item:<br>
+<strong>reset_value =</strong> value reporting the value of the register 
+immediately after a reset. This value is used for documentation purposes and 
+could be equally part of the description string. It is therefore optional.</p>
+<h4>Example:</h4>
+<pre>...&nbsp;
+       &lt;register&gt;
+         &lt;name&gt;TimerCtrl0&lt;/name&gt;
+         &lt;description&gt;Timer Control Register&lt;/description&gt;
+         &lt;offset&gt;0x0&lt;/offset&gt;
+         &lt;!-- alternatively to offset address could be used: &lt;address&gt;0x40000000&lt;/address&gt; --&gt;
+         &lt;size&gt;32&lt;/size&gt;
+         &lt;access_permission&gt;RW&lt;/access_permission&gt;
+         &lt;access_types&gt;1,2,4&lt;/access_types&gt;
+         &lt;reset_value&gt;0x00000000&lt;/reset_value&gt;
+
+         &lt;bitfield&gt;
+           &lt;name&gt;TimerCtrl0_En&lt;/name&gt;
+           ...
+         &lt;/bitfield&gt;
+
+         ...
+
+         &lt;bitfield&gt;
+           &lt;name&gt;TimerCtrl0_Int&lt;/name&gt;
+           ...
+         &lt;/bitfield&gt;
+       &lt;/register&gt;
+...</pre>
+<hr>
+<h4>&nbsp;&lt;bitfield&gt;</h4>
+<p>&nbsp;&nbsp; &lt;name&gt;<em> string </em>&lt;/name&gt;<br>
+&nbsp;&nbsp; &lt;description&gt;<em> string </em>&lt;/description&gt;<br>
+&nbsp;&nbsp; &lt;lsb&gt;<em> value </em>&lt;/lsb&gt;<br>
+&nbsp;&nbsp; &lt;msb&gt;<em> value </em>&lt;/msb&gt; <strong>or </strong>&lt;size&gt;<em> 
+value </em>&lt;/size&gt;<br>
+&nbsp;&nbsp; &lt;access_permission&gt;<em> predefined string </em>&lt;/access_permission&gt;<br>
+&nbsp;&nbsp; <span class="style10">&lt;reset_value&gt;<em> value </em>&lt;/reset_value&gt;</span></p>
+<p>&nbsp;&nbsp; &lt;enumeration&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;name&gt;&nbsp;&nbsp; &lt;name&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ...<br>
+&nbsp;&nbsp; &lt;/enumeration&gt;</p>
+
+<h4>&lt;/bitfield&gt;</h4>
+<p>A bit-field has a name that is unique for the register it belongs to. The 
+position and size within the register is either described by the combination of 
+the least significant bit's position (lsb) and the most significant bit's 
+position (msb) or the lsb and the size, specifying the bit-width of the 
+bit-field.&nbsp; A bit-field may define an enumeration in order 
+to make the display more readable. </p>
+<p>Mandatory items:<br>
+<strong>name = </strong>name string used to identify the register. Register 
+names are required to be unique within the scope of a peripheral.<br>
+<strong>description = </strong>string describing the details of the register.<br>
+<strong>lsb = </strong>value defining the position of the least significant bit 
+of the bitfield within the register it belongs to.<br>
+<strong>msb =</strong> value defining the position of the most significant bit 
+of the bitfield within the register it belongs to.<br>
+<strong>size = </strong>value defining the bit-width of the bitfield within the 
+register it belongs to.<br>
+(msb and size need to be used mutually exclusive)<br>
+<strong>access_permission =</strong> predefined strings defining the allowed 
+accesses for this register: <strong>RO</strong> = read only, <strong>WO</strong> 
+= write only, <strong>RW</strong> = read write<br>
+<strong>enumeration = </strong>next lower level of description (see next section 
+for details)</p>
+<p>Optional item:<br>
+<strong>reset_value =</strong> value reporting the value of the bit-field 
+immediately after a reset. This value is used for documentation purposes and 
+could be equally part of the description string. It is therefore optional</p>
+<h4>Example:</h4>
+<pre>...
+         &lt;bitfield&gt;
+           &lt;name&gt;TimerCtrl0_IntSel&lt;/name&gt;
+           &lt;description&gt;Select interrupt line t<span class="style8">hat is triggered by timer overflow</span>.&lt;/description&gt;
+           &lt;lsb&gt;1&lt;/lsb&gt;
+           &lt;msb&gt;3&lt;/msb&gt;
+           &lt;!-- alternatively to msb size could be used: &lt;size&gt;3&lt;/size&gt; --&gt;
+           &lt;access_permission&gt;RW&lt;/access_permission&gt;
+           &lt;reset_value&gt;0&lt;reset_value&gt;
+           &lt;enumeration&gt;
+              &lt;name&gt;TimerIntSelect&lt;/name&gt;
+
+              ...
+
+           &lt;/enumeration&gt;
+...</pre>
+<hr>
+<h4>&lt;enumeration&gt;</h4>
+<p>&nbsp;&nbsp; <span class="style10">&lt;name&gt; <em>string</em> &lt;name&gt;</span><br>
+&nbsp;&nbsp; &lt;enum&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;value&gt;<em> value </em>&lt;/value&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ...<br>
+&nbsp;&nbsp; &lt;/enum&gt;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ...&nbsp;</p>
+<p>&nbsp;&nbsp; &lt;enum&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;value&gt;<em> value </em>&lt;/value&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ...<br>
+&nbsp;&nbsp;&lt;/enum&gt;<br>
+</p>
+<h4>&lt;/enumeration&gt;</h4>
+<p>An enumeration provides one or more enumeration items (enum), defining a map 
+between all possible values of the bit-field it belongs to and the corresponding 
+human readable semantics of that value.</p>
+<p>Mandaotry items:<br>
+<strong>enum = </strong>next lower level of description (see next section 
+for details)</p>
+<p>Optional items:<br>
+<strong>name =</strong> name string to identify an enumeration. Named 
+enumerations need to be unique in the scope of a device in order to be reusable 
+throughout the description.</p>
+<h4>Example:</h4>
+<pre>...
+           &lt;enumeration&gt;
+              &lt;name&gt;TimerIntSelect&lt;/name&gt;
+              &lt;enum&gt;
+                 &lt;value&gt;0&lt;/value&gt;
+                 ...
+              &lt;/enum&gt;
+
+              ...
+
+              &lt;enum&gt;
+                 &lt;value&gt;other&lt;/value&gt;
+                 ...
+              &lt;/enum&gt;
+           &lt;/enumeration&gt;
+...</pre>
+<hr>
+<h4>&lt;enum&gt;</h4>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;value&gt; <em>value</em> &lt;/value&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;name&gt; <em>string </em>&lt;/name&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="style10">&lt;description&gt;<em> string
+</em>&lt;/description&gt;</span></p>
+<h4>&lt;/enum&gt;</h4>
+<p>An enum defines a map between a value and the string reading the 
+corresponding human readable semantics for that value in a brief and a detailed 
+version</p>
+<p>Mandaotry items:<br>
+<strong>value= </strong>defines the constant of the bit-field that the name 
+corresponds to<strong>.<br>
+name=</strong> brief string verbally describing the semantics of the value 
+defined for this enum. E.g. used for display in visualization of a bit-field 
+instead of the value.</p>
+<p>Optional items:<br>
+<strong>description = </strong>extended string verbally describing the semantics 
+of the value defined for this enum in full detail.</p>
+<h4>Example:</h4>
+<pre>...
+              &lt;enum&gt;
+                 &lt;value&gt;0&lt;/value&gt;
+                 &lt;name&gt;disabled&lt;/name&gt;
+                 &lt;description&gt;Timer does not generate interrupts&lt;/description&gt;
+              &lt;/enum&gt;
+...</pre>
+<hr>
+<h4>Names</h4>
+<p>Names shall comply with ANSI C variable naming restrictions.</p>
+<h4>Constants</h4>
+<p>Number constants can be entered in hexadecimal, decimal or binary format</p>
+<ul>
+				<li>hexadecimal is indicated by a leading &quot;0x&quot;</li>
+				<li>binary format is indicated by a leading&nbsp; &quot;0b&quot;</li>
+				<li>all other formats are interpreted as decimal numbers</li>
+</ul>
+<h4><b>Comments</b> </h4>
+<p>Comments have the standard XML format <strong>&quot;&lt;!--&quot;</strong> starts a comment
+	<strong><span class="style2">&quot;--&gt;&quot;</span></strong> terminates a comment</p>
+<h2>Example</h2>
+<p>
+  &nbsp;</p>
+<pre>
+&lt;device&gt;
+  &lt;name&gt;Cortex-M3_Sample&lt;/name&gt;
+  &lt;description&gt;ARM Cortex-M3 based Microcontroller dummy device&lt;/description&gt;
+  &lt;version&gt;0.1&lt;/version&gt;
+
+  &lt;peripheral_group&gt;
+    &lt;name&gt;Timer&lt;/name&gt;
+    &lt;description&gt;The Timer group contains simple timer and complex timer as well as the watchdog timer&lt;/description&gt;
+    
+    &lt;peripheral&gt;
+       &lt;name&gt;Timer0&lt;/name&gt;
+       &lt;description&gt;Timer 0 is a simple 16 bit timer counting down ... &lt;/description&gt;
+       &lt;base_address&gt;0x40000000&lt;/base_address&gt;
+       &lt;end_address&gt;0x400003ff&lt;/end_address&gt;
+       &lt;!-- alternatively to end_address size could be used: &lt;size&gt;0x400&lt;/size&gt; --&gt;
+
+       &lt;register&gt;
+         &lt;name&gt;TimerCtrl0&lt;/name&gt;
+         &lt;description&gt;Timer Control Register&lt;/description&gt;
+         &lt;offset&gt;0x0&lt;/offset&gt;
+         &lt;!-- alternatively to offset address could be used: &lt;address&gt;0x40000000&lt;/address&gt; --&gt;
+         &lt;size&gt;32&lt;/size&gt;
+         &lt;access_permission&gt;RW&lt;/access_permission&gt;
+         &lt;access_types&gt;4&lt;/access_types&gt;
+         &lt;reset_value&gt;0x00000000&lt;/reset_value&gt;
+
+         &lt;bitfield&gt;
+           &lt;name&gt;TimerCtrl0_En&lt;/name&gt;
+           &lt;description&gt;Enable Bit activates the timer.&lt;/description&gt;
+           &lt;lsb&gt;0&lt;/lsb&gt;
+           &lt;msb&gt;0&lt;/msb&gt;
+           &lt;!-- alternatively to msb size could be used: &lt;size&gt;1&lt;/size&gt; --&gt;
+           &lt;access_permission&gt;RW&lt;/access_permission&gt;
+           &lt;reset_value&gt;0&lt;/reset_value&gt;
+           &lt;enumeration&gt;
+              &lt;enum&gt;
+                 &lt;value&gt;0&lt;/value&gt;
+                 &lt;name&gt;enabled&lt;/name&gt;
+                 &lt;description&gt;Timer is enabled and active&lt;/description&gt;
+              &lt;/enum&gt;
+              &lt;enum&gt;
+                 &lt;value&gt;1&lt;/value&gt;
+                 &lt;name&gt;disabled&lt;/name&gt;
+                 &lt;description&gt;Timer is disabled and inactive&lt;/description&gt;
+              &lt;/enum&gt;
+              &lt;!-- alternatively &lt;value&gt;other&lt;/value&gt; could be used instead of &lt;value&gt;1&lt;/value&gt;
+           &lt;/enumeration&gt;
+         &lt;/bitfield&gt;
+
+         &lt;bitfield&gt;
+           &lt;name&gt;TimerCtrl0_Int&lt;/name&gt;
+           &lt;description&gt;Select interrupt line t<span class="style8">hat is triggered by timer overflow</span>.&lt;/description&gt;
+           &lt;lsb&gt;1&lt;/lsb&gt;
+           &lt;msb&gt;3&lt;/msb&gt;
+           &lt;!-- alternatively to msb size could be used: &lt;size&gt;3&lt;/size&gt; --&gt;
+           &lt;access_permission&gt;RW&lt;/access_permission&gt;
+           &lt;reset_value&gt;0&lt;reset_value&gt;
+           &lt;enumeration&gt;
+              &lt;enum&gt;
+                 &lt;value&gt;0&lt;/value&gt;
+                 &lt;name&gt;disabled&lt;/name&gt;
+                 &lt;description&gt;Timer does not generate interrupts&lt;/description&gt;
+              &lt;/enum&gt;
+              &lt;enum&gt;
+                 &lt;value&gt;1&lt;/value&gt;
+                 &lt;name&gt;int 0&lt;/name&gt;
+                 &lt;description&gt;Timer does generate interrupts on interrupt line 0&lt;/description&gt;
+              &lt;/enum&gt;
+              &lt;enum&gt;
+                 &lt;value&gt;2&lt;/value&gt;
+                 &lt;name&gt;int 1&lt;/name&gt;
+                 &lt;description&gt;Timer does generate interrupts on interrupt line 1&lt;/description&gt;
+              &lt;/enum&gt;
+              &lt;enum&gt;
+                 &lt;value&gt;3&lt;/value&gt;
+                 &lt;name&gt;int 2&lt;/name&gt;
+                 &lt;description&gt;Timer does generate interrupts on interrupt line 2&lt;/description&gt;
+              &lt;/enum&gt;
+              &lt;enum&gt;
+                 &lt;value&gt;4&lt;/value&gt;
+                 &lt;name&gt;int 3&lt;/name&gt;
+                 &lt;description&gt;Timer does generate interrupts on interrupt line 3&lt;/description&gt;
+              &lt;/enum&gt;
+              &lt;enum&gt;
+                 &lt;value&gt;5&lt;/value&gt;
+                 &lt;name&gt;int 4&lt;/name&gt;
+                 &lt;description&gt;Timer does generate interrupts on interrupt line 4&lt;/description&gt;
+              &lt;/enum&gt;
+              &lt;enum&gt;
+                 &lt;value&gt;other&lt;/value&gt;
+                 &lt;name&gt;reserved&lt;/name&gt;
+                 &lt;description&gt;Timer is configured incorrectly and the functionality is considered unpredictable&lt;/description&gt;
+              &lt;/enum&gt;
+           &lt;/enumeration&gt;
+       &lt;/register&gt;
+
+       &lt;register&gt;
+         &lt;name&gt;TimerCounter0&lt;/name&gt;
+         &lt;description&gt;Timer0 16 Bit Counter Register&lt;/description&gt;
+         &lt;offset&gt;0x4&lt;/offset&gt;
+         &lt;size&gt;16&lt;/size&gt;
+         &lt;access_permission&gt;RW&lt;/access_permission&gt;
+         &lt;access_types&gt;2&lt;/access_types&gt;
+         &lt;reset_value&gt;0x0000&lt;/reset_value&gt;
+       &lt;/register&gt;
+    &lt;/peripheral&gt;
+
+    &lt;peripheral&gt;
+       &lt;name&gt;Timer1&lt;/name&gt;
+       &lt;description&gt;Timer 1 is a simple 16 bit timer counting down ... &lt;/description&gt;
+       &lt;base_address&gt;0x40000400&lt;/base_address&gt;
+       &lt;end_address&gt;0x400007ff&lt;/end_address&gt;
+       &lt;!-- alternatively to end_address size could be used: &lt;size&gt;0x400&lt;/size&gt; --&gt;
+
+       &lt;register&gt;
+         &lt;name&gt;TimerCtrl1&lt;/name&gt;
+         &lt;description&gt;Timer1 Control Register&lt;/description&gt;
+         &lt;offset&gt;0x0&lt;/offset&gt;
+         &lt;!-- alternatively to offset address could be used: &lt;address&gt;0x40000400&lt;/address&gt; --&gt;
+         &lt;size&gt;32&lt;/size&gt;
+         &lt;access_permission&gt;RW&lt;/access_permission&gt;
+         &lt;access_types&gt;4&lt;/access_types&gt;
+         &lt;reset_value&gt;0x00000000&lt;/reset_value&gt;
+
+         &lt;bitfield&gt;
+           &lt;name&gt;TimerCtrl1_En&lt;/name&gt;
+           &lt;description&gt;Enable Bit activates the timer.&lt;/description&gt;
+           &lt;lsb&gt;0&lt;/lsb&gt;
+           &lt;msb&gt;0&lt;/msb&gt;
+           &lt;!-- alternatively to msb size could be used: &lt;size&gt;1&lt;/size&gt; --&gt;
+           &lt;access_permission&gt;RW&lt;/access_permission&gt;
+           &lt;reset_value&gt;0&lt;/reset_value&gt;
+           &lt;enumeration&gt;
+              &lt;enum&gt;
+                 &lt;value&gt;0&lt;/value&gt;
+                 &lt;name&gt;enabled&lt;/name&gt;
+                 &lt;description&gt;Timer is enabled and active&lt;/description&gt;
+              &lt;/enum&gt;
+              &lt;enum&gt;
+                 &lt;value&gt;1&lt;/value&gt;
+                 &lt;name&gt;disabled&lt;/name&gt;
+                 &lt;description&gt;Timer is disabled and inactive&lt;/description&gt;
+              &lt;/enum&gt;
+              &lt;!-- alternatively &lt;value&gt;other&lt;/value&gt; could be used instead of &lt;value&gt;1&lt;/value&gt;
+           &lt;/enumeration&gt;
+         &lt;/bitfield&gt;
+
+         &lt;bitfield&gt;
+           &lt;name&gt;TimerCtrl1_Int&lt;/name&gt;
+           &lt;description&gt;Select interrupt line t<span class="style8">hat is triggered by timer overflow</span>.&lt;/description&gt;
+           &lt;lsb&gt;1&lt;/lsb&gt;
+           &lt;msb&gt;3&lt;/msb&gt;
+           &lt;!-- alternatively to msb size could be used: &lt;size&gt;3&lt;/size&gt; --&gt;
+           &lt;access_permission&gt;RW&lt;/access_permission&gt;
+           &lt;reset_value&gt;0&lt;reset_value&gt;
+           &lt;enumeration&gt;
+              &lt;name&gt;TimerIntSelect&lt;/name&gt;
+              &lt;enum&gt;
+                 &lt;value&gt;0&lt;/value&gt;
+                 &lt;name&gt;disabled&lt;/name&gt;
+                 &lt;description&gt;Timer does not generate interrupts&lt;/description&gt;
+              &lt;/enum&gt;
+              &lt;enum&gt;
+                 &lt;value&gt;1&lt;/value&gt;
+                 &lt;name&gt;int 0&lt;/name&gt;
+                 &lt;description&gt;Timer does generate interrupts on interrupt line 0&lt;/description&gt;
+              &lt;/enum&gt;
+              &lt;enum&gt;
+                 &lt;value&gt;2&lt;/value&gt;
+                 &lt;name&gt;int 1&lt;/name&gt;
+                 &lt;description&gt;Timer does generate interrupts on interrupt line 1&lt;/description&gt;
+              &lt;/enum&gt;
+              &lt;enum&gt;
+                 &lt;value&gt;3&lt;/value&gt;
+                 &lt;name&gt;int 2&lt;/name&gt;
+                 &lt;description&gt;Timer does generate interrupts on interrupt line 2&lt;/description&gt;
+              &lt;/enum&gt;
+              &lt;enum&gt;
+                 &lt;value&gt;4&lt;/value&gt;
+                 &lt;name&gt;int 3&lt;/name&gt;
+                 &lt;description&gt;Timer does generate interrupts on interrupt line 3&lt;/description&gt;
+              &lt;/enum&gt;
+              &lt;enum&gt;
+                 &lt;value&gt;5&lt;/value&gt;
+                 &lt;name&gt;int 4&lt;/name&gt;
+                 &lt;description&gt;Timer does generate interrupts on interrupt line 4&lt;/description&gt;
+              &lt;/enum&gt;
+              &lt;enum&gt;
+                 &lt;value&gt;other&lt;/value&gt;
+                 &lt;name&gt;reserved&lt;/name&gt;
+                 &lt;description&gt;Timer is configured incorrectly and the functionality is considered unpredictable&lt;/description&gt;
+              &lt;/enum&gt;
+           &lt;/enumeration&gt;
+         &lt;/bitfield&gt;
+       &lt;/register&gt;
+
+       &lt;register&gt;
+         &lt;name&gt;TimerCounter1&lt;/name&gt;
+         &lt;description&gt;Timer1 16 Bit Counter Register&lt;/description&gt;
+         &lt;offset&gt;0x4&lt;/offset&gt;
+         &lt;size&gt;16&lt;/size&gt;
+         &lt;access_permission&gt;RW&lt;/access_permission&gt;
+         &lt;access_types&gt;2&lt;/access_types&gt;
+         &lt;reset_value&gt;0x0000&lt;/reset_value&gt;
+       &lt;/register&gt;
+    &lt;/peripheral&gt;
+  &lt;/peripheral_group&gt;
+&lt;/device&gt;</pre>
+
+<h2><a name="6"></a>Questions &amp; Answers</h2>
+<h3>Is there any relation between the System View Description and the CMSIS 
+standard?</h3>
+<p>There is no immediate link, however both initiatives have a common goal: 
+Create a sound software development eco-system for Cortex-M based 
+Microcontroller, giving the customers the free choice of devices and software 
+development environments and all resources required for a successful product 
+development in a single location.&nbsp; </p>
+<h3>Why does the format not provide constructs like include, macros and 
+conditional statements?</h3>
+<p>It is assumed that the description is generated from other sources and 
+therefore such concepts would only complicate the language unnecessarily. It is 
+recommended to use a standard C pre-processor to generate the debug description 
+format from an redundancy optimized description.</p>
+<h3>Do we need to consider endianess in the description?</h3>
+<p>This should be specified on a device configuration level and is not specific 
+to the System View.</p>
+<h3>Do we need more detailed access side-effects ?</h3>
+<p>Access can be the allowed accesses: read only = &quot;RO&quot;, write only = &quot;WO&quot;, read 
+and write = &quot;RW&quot;. Reference manuals also document access side-effects. E.g. a 
+register may be read- and&nbsp; writable but a write of 0 is ignored whereas a 
+write of 1 does have an effect. </p>
+<ul>
+				<li>Read and Clear, write of 1 clears status, write of 0 has no 
+				effect = &quot;RC_w1&quot; </li>
+				<li>Read and Clear, write of 1 has no effect, write of 0 clears 
+				status = &quot;RC_w0&quot;</li>
+				<li>Read and Clear, read clears status, write has no effect &quot;RC_r&quot;</li>
+				<li>Read and Set, &nbsp;write of 1 sets status, write of 0 has 
+				no effect = &quot;RS_w1&quot;</li>
+				<li>Read and Set, write of 1 has no effect, write of 1 clears 
+				status = &quot;RW_w0&quot;</li>
+				<li>Read and Set, read sets status, write has no effect &quot;RS_r&quot;</li>
+				<li>Read and Toggle, toggle on writing 1, writing 0 has no 
+				effect = &quot;RT_w1&quot;</li>
+				<li>Read and Toggle, writing 1 has no effect, writing 0 toggles 
+				status = &quot;RT_w0&quot;</li>
+</ul>
+<h3>Is the System View Description limited to Cortex-M based devices ?</h3>
+
+
+<p>There may have been assumptions being made about the structure of the device 
+due to it being developed around a Cortex-M processor. E.g. that all peripherals 
+are assumed to be memory mapped and to reside in a single address space.</p>
+
+
+</body></html>

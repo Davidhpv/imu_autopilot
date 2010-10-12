@@ -1,0 +1,15 @@
+
+This example project uses the EFM32 DSL including
+CMSIS and demonstrates the use of Systick in interrupt 
+driven mode.
+
+It sets up the USART2 SPI access to DVK registers,
+for use MCU-Module's with and without LCD.
+
+Board:  Energy Micro EFM32-Gxxx-DK Development Kit
+Device: EFM32G290F128 and EFM32G890F128
+
+-- CMSIS ---------------------------------------------
+SystemInit       called from startup_efm32.s
+SystemCoreClock  is 14Mhz
+SysTick          runs in interrupt mode

@@ -1,0 +1,22 @@
+This example project uses CMSIS and demonstrates 
+the use of Systick in interrupt driven mode
+
+Board:  none
+Device: ARMCM0
+
+Example functionality:                                                   
+ - Clock Settings:
+   - XTAL    =            8.00 MHz
+   - SYSCLK  =           72.00 MHz
+
+The Example program is available in different targets:
+  Simulator:   - configured for software Simulator
+  ARMCM0:      - runs from Internal Flash located on chip
+
+
+
+
+-- CMSIS ---------------------------------------------
+SystemInit       called from startup_amrcm0.s
+SystemCoreClock  is 72000000Hz
+SysTick          runs in interrupt mode

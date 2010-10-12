@@ -1,0 +1,20 @@
+This example project uses CMSIS and demonstrates 
+the use of Systick in interrupt driven mode
+
+Board:  Atmel AT91SAM3U-EK Evaluation Board
+Device: AT91SAM3U4E
+
+Example functionality:                                                   
+ - Clock Settings:
+   - XTAL    =           12.00 MHz
+   - SYSCLK  =           84.00 MHz
+
+The example program is available in different targets:
+  Simulator:    - configured for software Simulator
+  AT91SAM3U-EK: - runs from Internal Flash located on chip
+
+
+-- CMSIS ---------------------------------------------
+SystemInit       called from startup_SAM3U.s
+SystemCoreClock  is 84000000Hz
+SysTick          runs in interrupt mode

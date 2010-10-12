@@ -1,0 +1,22 @@
+This example project uses CMSIS and demonstrates 
+the use of Systick in interrupt driven mode
+
+Board:  Keil MCBTMPM330 Evaluation Board
+Device: TMPM330 
+
+Example functionality:                                                   
+ - Clock Settings:
+   - XTAL    =           10.00 MHz
+   - SYSCLK  =           40.00 MHz
+
+The example program is available in different targets:
+  Simulator:   - configured for software Simulator
+  MCBTMPM330:  - runs from Internal Flash located on chip
+
+
+
+
+-- CMSIS ---------------------------------------------
+SystemInit       called from startup_TMPM330.s
+SystemCoreClock  is 40000000Hz
+SysTick          runs in interrupt mode

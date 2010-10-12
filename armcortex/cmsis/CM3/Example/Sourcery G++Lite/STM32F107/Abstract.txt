@@ -1,0 +1,20 @@
+This example project uses CMSIS and demonstrates 
+the use of Systick in interrupt driven mode
+
+Board:  Keil MCBSTM32C Evaluation Board
+Device: STM32F107VCT6 
+
+Example functionality:                                                   
+ - Clock Settings:
+   - XTAL    =           25.00 MHz
+   - SYSCLK  =           72.00 MHz
+
+The example program is available for target:
+  MCBSTM32C:   - runs from Internal Flash located on chip
+
+
+
+-- CMSIS ---------------------------------------------
+SystemInit       called from startup_stm32F10x_cl.s
+SystemCoreClock  is 72000000Hz
+SysTick          runs in interrupt mode

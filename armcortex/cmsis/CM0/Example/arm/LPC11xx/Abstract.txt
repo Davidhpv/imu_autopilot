@@ -1,0 +1,22 @@
+This example project uses CMSIS and demonstrates 
+the use of Systick in interrupt driven mode
+
+Board:  Keil MCB1000 Evaluation Board
+Device: LPC1114
+
+Example functionality:                                                   
+ - Clock Settings:
+   - XTAL    =           12.00 MHz
+   - SYSCLK  =           48.00 MHz
+
+The example program is available in different targets:
+
+  MCB1000:     - runs from Internal Flash located on chip
+
+
+
+
+-- CMSIS ---------------------------------------------
+SystemInit       called from startup_LPC11xx.s
+SystemCoreClock  is 48000000Hz
+SysTick          runs in interrupt mode
