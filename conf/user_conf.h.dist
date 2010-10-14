@@ -48,7 +48,7 @@
 
 
 
-#ifndef VEHICLE_TYPE
+#ifndef PX_VEHICLE_TYPE
 #error PLEASE SELECT SYSTEM TYPE IN user/user_conf.h FIRST! ABORTING COMPILATION
 #endif
 
