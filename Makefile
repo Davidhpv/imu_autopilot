@@ -32,6 +32,7 @@ SRCARM += arm7/ppm.c
 SRCARM += arm7/pwm.c 
 SRCARM += arm7/sys_time.c 
 SRCARM += arm7/uart.c 
+SRCARM += arm7/syscalls.c
 SRCARM += comm/comm.c
 SRCARM += system/watchdog.c
 SRCARM += system/pid.c
