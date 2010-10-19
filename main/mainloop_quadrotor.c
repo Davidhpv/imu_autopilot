@@ -43,6 +43,7 @@
 #include "shutter.h"
 #include "infrared_distance.h"
 #include "gps.h"
+#include "gps_transformations.h"
 
 #include "altitude_speed.h"
 #include "global_pos.h"
@@ -362,35 +363,47 @@ void main_loop_quadrotor(void)
 				gps.z = gps_utm_zone;// gps_week;
 				debug_vect("GPS", gps);
 
-
 			}
-			else if (global_data.param[PARAM_GPS_MODE] == 9)
+			else if (global_data.param[PARAM_GPS_MODE] == 9
+					|| global_data.param[PARAM_GPS_MODE] == 8)
 			{
-				static float_vect3 gps_local, gps_local_home;
-				static bool gps_local_home_init= false;
+//				static float_vect3 gps_local, gps_local_home;
+//				static bool gps_local_home_init = false;
+//				static float gps_cos_home_lat;
+
+				if (global_data.param[PARAM_GPS_MODE] == 8)
+				{
+					gps_set_local_origin();
+//					gps_local_home_init = false;
+				}
 				if (gps_lat == 0)
 				{
 					debug_message_buffer("GPS Signal Lost");
 				}
 				else
 				{
-					float r_earth = 6378140;
-					if (!gps_local_home_init)
-					{
-						gps_local_home.x = gps_lat / 1e7f;
-						gps_local_home.y = gps_lon / 1e7f;
-						gps_local_home.z = gps_alt / 100e0f;
-						gps_local_home_init = true;
-						debug_message_buffer("GPS Local Home saved");
-					}
-
-					gps_local.x = r_earth * tan((gps_lat / 1e7f
-							- gps_local_home.x) * 3.1415 / 180);
-					//gps_local.x=tan(0*3.1415/180);
-					gps_local.y = r_earth * tan((gps_lon / 1e7f
-							- gps_local_home.y) * 3.1415 / 180);
-					gps_local.z = gps_alt / 100e0f - gps_local_home.z;
+					float_vect3 gps_local, gps_local_velocity;
+					gps_get_local_position(&gps_local);
 					debug_vect("GPS local", gps_local);
+					gps_get_local_velocity(&gps_local_velocity);
+					debug_vect("GPS loc velocity", gps_local_velocity);
+//					const float r_earth = 6378140;
+//					if (!gps_local_home_init)
+//					{
+//						gps_local_home.x = gps_lat / 1e7f;
+//						gps_local_home.y = gps_lon / 1e7f;
+//						gps_local_home.z = gps_alt / 100e0f;
+//						gps_cos_home_lat = cos(gps_local_home.x * 3.1415 / 180);
+//						gps_local_home_init = true;
+//						debug_message_buffer("GPS Local Origin saved");
+//					}
+//
+//					gps_local.x = r_earth * tan((gps_lat / 1e7f
+//							- gps_local_home.x) * 3.1415 / 180);
+//					gps_local.y = r_earth * gps_cos_home_lat * tan((gps_lon
+//							/ 1e7f - gps_local_home.y) * 3.1415 / 180);
+//					gps_local.z = gps_alt / 100e0f - gps_local_home.z;
+//					debug_vect("GPS local", gps_local);
 				}
 			}
 
