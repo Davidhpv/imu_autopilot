@@ -1,5 +1,6 @@
-#Sat Oct 16 20:02:24 CEST 2010
+#Sat Oct 23 18:50:14 CEST 2010
 eclipse.preferences.version=1
+environment/project/0.827932761=<?xml version\="1.0" encoding\="UTF-8"?>\n<environment append\="true" appendContributed\="true">\n<variable delimiter\="\:" name\="PATH" operation\="replace" value\="/usr/bin\:/bin\:/usr/sbin\:/sbin\:/opt/cross-arm/yagarto-4.4.2/bin\:/opt/cross-arm/yagarto-4.4.2/tools"/>\n</environment>\n
 indexer/filesToParseUpFront=cstdarg, stdarg.h, stddef.h, sys/resource.h, ctime, sys/types.h, signal.h, cstdio
 indexer/indexAllFiles=true
 indexer/indexUnusedHeadersWithDefaultLang=false

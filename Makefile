@@ -3,6 +3,9 @@ CONFIG = ''
 BUILDDIR = build
 OBJDIR = build/obj
 BINDIR = build/bin
+MAVLINKBASEDIR = ../mavlink/include
+MAVLINKDIR = ../mavlink/include/pixhawk
+MAVLINKUSERDIR = ../mavlink/include/user
 Q = @
 TOOLS = tools
 
@@ -104,8 +107,6 @@ CFLAGS += -I arm7
 CFLAGS += -I arm7/include
 CFLAGS += -I arm7/spi_devices
 CFLAGS += -I arm7/i2c_devices
-CFLAGS += -I ../mavlink/include
-CFLAGS += -I ../../mavlink/trunk/include
 CFLAGS += -I comm
 CFLAGS += -I conf
 CFLAGS += -I controllers
@@ -119,6 +120,8 @@ CFLAGS += -I system
 CFLAGS += -I math
 CFLAGS += -I math/geodetic
 CFLAGS += -I arm7/sdfat
+CFLAGS += -I $(MAVLINKBASEDIR)
+CFLAGS += -I $(MAVLINKDIR)
 	
 CFLAGS += -O2
 CFLAGS += -Wall -Wcast-qual -Wimplicit -Wcast-align
@@ -151,15 +154,17 @@ ALL_CFLAGS = -mcpu=$(MCU) $(THUMB_IW) $(FLOATING_POINT) -I. $(CFLAGS) $(DEADCODE
 ALL_ASFLAGS = -mcpu=$(MCU) $(THUMB_IW) -I. -x assembler-with-cpp $(ASFLAGS)
  
 # Default target.
-all: usercheck build size doc
+all: build size doc
  
 #build: generated elf hex lss sym
-build: elf hex
+build: usercheck mavlinkcheck elf hex
 
 usercheck:
 	@if test -f conf/user_conf.h; then echo "User config existed, continuing.."; else echo -e "\nNOT COMPILING ANYTHING, PLEASE MAKE USER SETTINGS FIRST:\n\nBecause conf/user_conf.h does not exist, you cannot compile. Most likely you just installed the PIXHAWK codebase. The first step to compile your own code is to COPY conf/user_conf.h.dist to conf/user_conf.h and to edit the file according to your preferences.\n \nPLEASE COPY conf/user_conf.h.dist -> conf/user_conf.h\n" && exit 42; fi
 
- 
+mavlinkcheck:
+	@if test -d $(MAVLINKUSERDIR); then echo "Found MAVLink user specific files, using custom messages."; else echo -e "\nNo custom MAVLink header found, using default message set.\n"; fi
+
 elf: $(OBJDIR)/$(TARGET).elf
 hex: $(BINDIR)/$(TARGET).hex
 lss: $(OBJDIR)/$(TARGET).lss
