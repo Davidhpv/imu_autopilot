@@ -49,7 +49,9 @@
 
 
 #ifndef PX_VEHICLE_TYPE
-#error PLEASE SELECT SYSTEM TYPE IN user/user_conf.h FIRST! ABORTING COMPILATION
+// Uncomment the #define PX_VEHICLE_TYPE line above and select system type
+// to resolve this error
+#error PLEASE SELECT SYSTEM TYPE IN conf/user_conf.h FIRST! UNCOMMENT LINE define PX_VEHICLE_TYPE ABORTING COMPILATION
 #endif
 
 #endif /* _USER_CONF_H_ */
