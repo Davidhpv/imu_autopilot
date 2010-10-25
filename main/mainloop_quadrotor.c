@@ -159,7 +159,7 @@ void main_loop_quadrotor(void)
 			// Prediction step of observer
 			attitude_observer_predict(global_data.gyros_si);
 
-			//position_integrate(&global_data.attitude,&global_data.position,&global_data.velocity,&global_data.accel_si);
+			position_integrate(&global_data.attitude,&global_data.position,&global_data.velocity,&global_data.accel_si);
 
 			// QUADROTOR CODE
 			// ====================================================================

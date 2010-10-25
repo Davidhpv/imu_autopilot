@@ -75,11 +75,12 @@ static uint32_t next_exec_time[NUM_OF_COUNTERS]; ///< Software counter for mainl
 // Integrating Position testing. Laurens
 void position_integrate(float_vect3* att,float_vect3 *pos,float_vect3 *vel,float_vect3 *acc)
 {
-	const float time = 0.005; //200Hz
-	static float_vect3 acc_offset;
+//	const float time = 0.005; //200Hz
+//	static float_vect3 acc_offset;
 	//static float_vect3 vel_offset;
-	float_vect3 acc_nav = *acc;
+	float_vect3 acc_nav;
 	body2navi(acc, att, &acc_nav);
+	debug_vect("acc_navi", acc_nav);
 //
 //	acc_nav.x = (acc_nav.x - global_data.param[PARAM_ACC_NAVI_OFFSET_X])/100;
 //	acc_nav.y = (acc_nav.y - global_data.param[PARAM_ACC_NAVI_OFFSET_Y])/100;
@@ -95,31 +96,31 @@ void position_integrate(float_vect3* att,float_vect3 *pos,float_vect3 *vel,float
 //	acc_nav.z -= acc_offset.z;
 
 
-	acc_nav.x -= acc_offset.x;
-	acc_nav.y -= acc_offset.y;
-	acc_nav.z -= acc_offset.z;
-
-	if (abs(acc_nav.x) > 0.01)
-	{
-	vel->x += acc_nav.z * time;
-		vel->x*=global_data.param[PARAM_VEL_DAMP];
-
-		pos->x += vel->x * time + acc_nav.x * time * time;
-	}else{
-
-		float acc_lowpass = 0.01;
-		acc_offset.x = acc_offset.x * (1 - acc_lowpass) + acc_nav.x * acc_lowpass;
-		acc_offset.y = acc_offset.y * (1 - acc_lowpass) + acc_nav.y * acc_lowpass;
-		acc_offset.z = acc_offset.z * (1 - acc_lowpass) + acc_nav.z * acc_lowpass;
-
-	}
-
-	static uint8_t i = 0;
-	if (i++ > 50)
-	{
-		i = 0;
-		debug_vect("acc_navi", acc_nav);
-	}
+//	acc_nav.x -= acc_offset.x;
+//	acc_nav.y -= acc_offset.y;
+//	acc_nav.z -= acc_offset.z;
+//
+//	if (abs(acc_nav.x) > 0.01)
+//	{
+//	vel->x += acc_nav.z * time;
+//		vel->x*=global_data.param[PARAM_VEL_DAMP];
+//
+//		pos->x += vel->x * time + acc_nav.x * time * time;
+//	}else{
+//
+//		float acc_lowpass = 0.01;
+//		acc_offset.x = acc_offset.x * (1 - acc_lowpass) + acc_nav.x * acc_lowpass;
+//		acc_offset.y = acc_offset.y * (1 - acc_lowpass) + acc_nav.y * acc_lowpass;
+//		acc_offset.z = acc_offset.z * (1 - acc_lowpass) + acc_nav.z * acc_lowpass;
+//
+//	}
+//
+//	static uint8_t i = 0;
+//	if (i++ > 50)
+//	{
+//		i = 0;
+//		debug_vect("acc_navi", acc_nav);
+//	}
 
 
 
