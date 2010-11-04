@@ -179,10 +179,10 @@ static void sca3100_on_spi_int(void) {
 		if(raw_value & (1<<13))
 		{
 			raw_value &= 0x1FFF;
-			mg_value = ((int16_t)raw_value-SCA3100_MAX_NEG_VALUE)*(10)/9;
+			mg_value = ((int16_t)raw_value-SCA3100_MAX_NEG_VALUE);
 		}
 		else {
-			mg_value = (int16_t)raw_value*(10)/9;
+			mg_value = (int16_t)raw_value;
 		}
 		sca3100_values[SCA3100_X_AXIS] = (int)mg_value; 	// store measurement for X axis
 
@@ -194,10 +194,10 @@ static void sca3100_on_spi_int(void) {
 		// convert raw_value in two's complement to mg_value in normal binary format and scale it to mg
 		if(raw_value & (1<<13)) {
 			raw_value &= 0x1FFF;
-			mg_value = ((int16_t)raw_value-SCA3100_MAX_NEG_VALUE)*(10)/9;
+			mg_value = ((int16_t)raw_value-SCA3100_MAX_NEG_VALUE);
 		}
 		else {
-			mg_value = (int16_t)raw_value*(10)/9;
+			mg_value = (int16_t)raw_value;
 		}
 		sca3100_values[SCA3100_Z_AXIS] = (int)mg_value;		// store measurement for Z axis
 
@@ -209,10 +209,10 @@ static void sca3100_on_spi_int(void) {
 		// convert raw_value in two's complement to mg_value in normal binary format and scale it to mg
 		if(raw_value & (1<<13)) {
 			raw_value &= 0x1FFF;
-			mg_value = ((int16_t)raw_value-SCA3100_MAX_NEG_VALUE)*(10)/9;
+			mg_value = ((int16_t)raw_value-SCA3100_MAX_NEG_VALUE);
 		}
 		else {
-			mg_value = (int16_t)raw_value*(10)/9;
+			mg_value = (int16_t)raw_value;
 		}
 		sca3100_values[SCA3100_Y_AXIS] = (int)mg_value;		// store measurement for Y axis
 		
