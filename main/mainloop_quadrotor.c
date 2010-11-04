@@ -207,6 +207,7 @@ void main_loop_quadrotor(void)
 		{
 			// Read Analog-to-Digital converter
 			adc_read();
+
 			// Control the quadrotor position
 			control_quadrotor_position();
 			// Read remote control
@@ -230,6 +231,7 @@ void main_loop_quadrotor(void)
 
 			//STARTING AND LANDING
 			quadrotor_start_land_handler(loop_start_time);
+
 		}
 		///////////////////////////////////////////////////////////////////////////
 
@@ -285,9 +287,9 @@ void main_loop_quadrotor(void)
 			communication_send_remote_control();
 
 			// Pressure sensor driver works, but not tested regarding stability
-			sensors_pressure_bmp085_read_out();
+//			sensors_pressure_bmp085_read_out();
 
-
+//
 //			mavlink_msg_debug_send(global_data.param[PARAM_SEND_DEBUGCHAN], 50, calc_altitude_pressure(global_data.pressure_raw));
 //			mavlink_msg_debug_send(global_data.param[PARAM_SEND_DEBUGCHAN], 51, global_data.pressure_raw);
 
@@ -345,7 +347,6 @@ void main_loop_quadrotor(void)
 			sync_state_parameters();
 
 			//Send execution times for debugging
-			//debug_vect("time_dbg",time_debug);
 			// Executiontime debugging
 			time_debug.x = 0;
 			time_debug.y = 0;
@@ -443,6 +444,61 @@ void main_loop_quadrotor(void)
 				//Check if parameters should be written or read
 				param_handler();
 			}
+
+			sensors_pressure_bmp085_read_out();
+
+			//testing single kalman
+			float kal_z = calc_altitude_pressure(global_data.pressure_raw);
+			if (abs(kal_z) > 2000)
+			{
+				kal_z = 0;
+			}
+			else
+			{
+
+				const float kal_num = 200;
+				static float kal_mean = 0;
+				static float kal_variance = 0;
+
+				if (kal_mean == 0)
+				{
+					kal_mean = kal_z;
+				}
+
+				kal_mean = kal_mean * (1 - 1 / kal_num) + kal_z / kal_num;
+
+				kal_variance = kal_variance * (1 - 1 / kal_num) + (kal_z
+						- kal_mean) * (kal_z - kal_mean) / kal_num;
+
+				static float kal_x = 0;
+				static float kal_p = 100000000;
+				static float kal_k = 1;
+
+				static float kal_q = 0.00001;
+				static float kal_r = 4;
+
+				//predict
+				kal_x = kal_x;
+				kal_p = kal_p + kal_q;
+
+				//correct
+				kal_k = kal_p / (kal_p + kal_r);
+				kal_x = kal_x + kal_k * (kal_z - kal_x);
+				kal_p = (1 - kal_k) * kal_p;
+
+				float_vect3 kal;
+				kal.x = kal_x;
+				kal.y = kal_p;
+				kal.z = kal_k;
+				kal.y = kal_mean;
+				kal.z = kal_variance;
+			//	debug_vect("alt_kal", kal);
+
+			//	mavlink_msg_debug_send(global_data.param[PARAM_SEND_DEBUGCHAN],
+		//				50, kal_z);
+				//			mavlink_msg_debug_send(global_data.param[PARAM_SEND_DEBUGCHAN], 51, global_data.pressure_raw);
+			}
+
 		}
 		///////////////////////////////////////////////////////////////////////////
 
