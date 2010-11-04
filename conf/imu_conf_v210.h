@@ -127,6 +127,9 @@
 #define SCA3100_X_AXIS 0
 #define SCA3100_Y_AXIS 1
 #define SCA3100_Z_AXIS 2
+
+#define SCA3100_COUNTS_PER_G 900	//+-2g Sensor
+//#define SCA3100_COUNTS_PER_G 650	//+-6g Sensor
 //@}
 
 /*======================================================================*/

@@ -117,8 +117,9 @@ void attitude_observer_correct_magnet(int16_vect3 magnet)
 void attitude_observer_get_angles(float_vect3* angles){
 	angles->x = atan2(-state_accel.y, -state_accel.z);
 	//angles->y = atan2(state_accel.x, -state_accel.z);//test
-	angles->y = asin(state_accel.x / 900.0f); //2g Sensor
+	//angles->y = asin(state_accel.x / 900.0f); //2g Sensor
 	//angles->y = asin(state_accel.x / 650.0f); //6g Sensor
+	angles->y = asin(state_accel.x / SCA3100_COUNTS_PER_G);
 
 //	angles->x = -state_accel.x;
 //	angles->y = -state_accel.y;

@@ -127,6 +127,7 @@ static inline void sensors_init(void)
 //	}
 //}
 
+
 static inline void sensors_read_acc(void)
 {
 	// Sending accel readout request
@@ -137,10 +138,10 @@ static inline void sensors_read_acc(void)
 	global_data.accel_raw.y = (int)sca3100_get_value(SCA3100_Y_AXIS);
 	global_data.accel_raw.z = -(int)sca3100_get_value(SCA3100_Z_AXIS);
 
-	// Convert milli g to m/s^2
-	global_data.accel_si.x = (float)global_data.accel_raw.x*0.00981f;
-	global_data.accel_si.y = (float)global_data.accel_raw.y*0.00981f;
-	global_data.accel_si.z = (float)global_data.accel_raw.z*0.00981f;
+	// Convert raw data g to m/s^2
+	global_data.accel_si.x = (float)global_data.accel_raw.x*9.81f/SCA3100_COUNTS_PER_G;
+	global_data.accel_si.y = (float)global_data.accel_raw.y*9.81f/SCA3100_COUNTS_PER_G;
+	global_data.accel_si.z = (float)global_data.accel_raw.z*9.81f/SCA3100_COUNTS_PER_G;
 }
 
 static inline void sensors_read_mag(void)
