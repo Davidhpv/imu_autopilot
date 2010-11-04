@@ -164,7 +164,7 @@ usercheck:
 	@if test -f conf/user_conf.h; then echo "User config existed, continuing.."; else echo -e "\nNOT COMPILING ANYTHING, PLEASE MAKE USER SETTINGS FIRST:\n\nBecause conf/user_conf.h does not exist, you cannot compile. Most likely you just installed the PIXHAWK codebase. The first step to compile your own code is to COPY conf/user_conf.h.dist to conf/user_conf.h and to edit the file according to your preferences.\n \nPLEASE COPY conf/user_conf.h.dist -> conf/user_conf.h\n" && exit 42; fi
 
 mavlinkcheck:
-	@if test -d $(MAVLINKUSERDIR); then echo "Found MAVLink user specific files, using custom messages."; else echo -e "\nNo custom MAVLink header found, using default message set.\n"; fi
+	@if test -d $(MAVLINKUSERDIR); then echo "Found MAVLink user specific files, using custom messages."; else echo -e "\nNo custom MAVLink header found, using pixhawk message set.\n"; fi
 
 elf: $(OBJDIR)/$(TARGET).elf
 hex: $(BINDIR)/$(TARGET).hex
