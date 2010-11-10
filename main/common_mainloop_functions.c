@@ -369,7 +369,7 @@ uint8_t handle_reset_request(void)
 	static int reset_countdown;
 	if ((global_data.param[PARAM_IMU_RESET] == 1))
 	{
-		if (global_data.status == MAV_STATE_STANDBY)
+		if (global_data.state.status == MAV_STATE_STANDBY)
 		{
 			if (reset_countdown == 0)
 			{
@@ -399,7 +399,7 @@ void handle_eeprom_write_request(void)
 	//GET UPDATES FROM PARAMS
 	//testing eeprom params
 
-	if (global_data.status == MAV_STATE_STANDBY)
+	if (global_data.state.status == MAV_STATE_STANDBY)
 	{
 		switch ((uint8_t) global_data.param[PARAM_IMU_RESET])
 		{
@@ -485,7 +485,7 @@ void adc_read(void)
 void update_system_statemachine(uint64_t loop_start_time)
 {
 	// Update state machine, enable and disable controllers
-	switch (global_data.mode)
+	switch (global_data.state.mav_mode)
 	{
 	case MAV_MODE_MANUAL:
 		global_data.param[PARAM_MIX_POSITION_WEIGHT] = 0;
@@ -501,33 +501,33 @@ void update_system_statemachine(uint64_t loop_start_time)
 	case MAV_MODE_GUIDED:
 		if (global_data.state.position_fix)
 		{
-			if (global_data.status == MAV_STATE_CRITICAL)
+			if (global_data.state.status == MAV_STATE_CRITICAL)
 			{
 				//get active again if we are in critical
 				//if we are in Emergency we don't want to start again!!!!
-				global_data.status = MAV_STATE_ACTIVE;
+				global_data.state.status = MAV_STATE_ACTIVE;
 			}
 		}
 		else
 		{
-			if (global_data.status == MAV_STATE_ACTIVE)
+			if (global_data.state.status == MAV_STATE_ACTIVE)
 			{
-				global_data.status = MAV_STATE_CRITICAL;
+				global_data.state.status = MAV_STATE_CRITICAL;
 				global_data.entry_critical = loop_start_time;
 				debug_message_buffer("CRITICAL! POSITION LOST");
 			}
-			else if (global_data.status == MAV_STATE_CRITICAL && (loop_start_time - global_data.entry_critical
+			else if (global_data.state.status == MAV_STATE_CRITICAL && (loop_start_time - global_data.entry_critical
 					> 3 * (uint32_t) global_data.param[PARAM_POSITION_TIMEOUT]))
 			{
 				//wait 3 times as long as waited for critical
 
-				global_data.status = MAV_STATE_EMERGENCY;
+				global_data.state.status = MAV_STATE_EMERGENCY;
 				//Initiate Landing even if we didn't reach 0.7m
 				global_data.state.fly=FLY_LANDING;
 				debug_message_buffer("EMERGENCY! MAYDAY! MAYDAY! LANDING!");
 			}
 		}
-		switch (global_data.status)
+		switch (global_data.state.status)
 		{
 		case MAV_STATE_ACTIVE:
 			global_data.param[PARAM_MIX_POSITION_WEIGHT] = 1;
@@ -589,11 +589,11 @@ void send_system_state(void)
 			global_data.param[PARAM_SYSTEM_TYPE], MAV_AUTOPILOT_PIXHAWK);
 
 	// Send system status over both links
-	mavlink_msg_sys_status_send(MAVLINK_COMM_1, global_data.mode, 0,
-			global_data.status, global_data.battery_voltage,
+	mavlink_msg_sys_status_send(MAVLINK_COMM_1, global_data.state.mav_mode, 0,
+			global_data.state.status, global_data.battery_voltage,
 			global_data.motor_block, global_data.packet_drops);
-	mavlink_msg_sys_status_send(MAVLINK_COMM_0, global_data.mode, 0,
-			global_data.status, global_data.battery_voltage,
+	mavlink_msg_sys_status_send(MAVLINK_COMM_0, global_data.state.mav_mode, 0,
+			global_data.state.status, global_data.battery_voltage,
 			global_data.motor_block, global_data.packet_drops);
 
 	// Send auxiliary status over both links

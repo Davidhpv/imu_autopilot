@@ -165,17 +165,17 @@ inline void control_quadrotor_attitude()
 
 
 	// GUIDED AND AUTO MODES
-	if (global_data.mode == (uint8_t) MAV_MODE_GUIDED || global_data.mode
+	if (global_data.state.mav_mode == (uint8_t) MAV_MODE_GUIDED || global_data.state.mav_mode
 			== (uint8_t) MAV_MODE_AUTO)
 	{
 		motor_thrust = quadrotor_start_land_motor_thrust();
 	}
-	else if (global_data.mode == (uint8_t) MAV_MODE_MANUAL)
+	else if (global_data.state.mav_mode == (uint8_t) MAV_MODE_MANUAL)
 	{
 		motor_thrust = global_data.gas_remote;
 
 	}
-	else if (global_data.mode == (uint8_t)MAV_MODE_LOCKED)
+	else if (global_data.state.mav_mode == (uint8_t)MAV_MODE_LOCKED)
 	{
 		// LOCKED MODE
 		motor_thrust = 0;
@@ -318,9 +318,9 @@ inline void control_quadrotor_attitude()
 	motor_pwm[2] = (uint8_t) motor_calc[2];
 	motor_pwm[3] = (uint8_t) motor_calc[3];
  //Disable for testing without motors
-	if ((global_data.mode == MAV_MODE_MANUAL || global_data.mode
-			== MAV_MODE_GUIDED) && (global_data.status == MAV_STATE_ACTIVE
-			|| global_data.status == MAV_STATE_CRITICAL || global_data.status
+	if ((global_data.state.mav_mode == MAV_MODE_MANUAL || global_data.state.mav_mode
+			== MAV_MODE_GUIDED) && (global_data.state.status == MAV_STATE_ACTIVE
+			|| global_data.state.status == MAV_STATE_CRITICAL || global_data.state.status
 			== MAV_STATE_EMERGENCY))
 	{
 		// Set MOTORS
@@ -331,7 +331,7 @@ inline void control_quadrotor_attitude()
 	}
 	else
 	{
-		if (global_data.mode == MAV_MODE_TEST3
+		if (global_data.state.mav_mode == MAV_MODE_TEST3
 				&& global_data.param[PARAM_SW_VERSION] >= 0
 				&& global_data.param[PARAM_SW_VERSION] <= 255)
 		{

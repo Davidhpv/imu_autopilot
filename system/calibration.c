@@ -41,8 +41,8 @@
 #include "range.h"
 #include "remote_control.h"
 
-uint8_t calibration_prev_state;
-uint8_t calibration_prev_mode;
+static uint8_t calibration_prev_state;
+static uint8_t calibration_prev_mode;
 
 bool calibration_enter(void)
 {
@@ -70,6 +70,12 @@ void calibration_exit(void)
 	// Go back to old state
 	sys_set_mode(calibration_prev_state);
 	sys_set_state(calibration_prev_mode);
+
+	// Clear debug message buffers
+	for (int i = 0; i < DEBUG_COUNT; i++)
+	{
+		debug_message_send_one();
+	}
 
 	// Clear UART buffers
 	while (uart0_char_available())

@@ -47,14 +47,15 @@
 #include "control_quadrotor_position.h"
 #include "debug.h"
 #include "math.h"
+#include "sys_state.h"
 
 
 
 inline void remote_control(void)
 {
 
-	if (global_data.mode == (uint8_t) MAV_MODE_MANUAL || global_data.mode
-			== (uint8_t) MAV_MODE_GUIDED || global_data.mode
+	if (global_data.state.mav_mode == (uint8_t) MAV_MODE_MANUAL || global_data.state.mav_mode
+			== (uint8_t) MAV_MODE_GUIDED || global_data.state.mav_mode
 			== (uint8_t) MAV_MODE_AUTO)
 	{
 		if (radio_control_status() == RADIO_CONTROL_ON)
@@ -101,7 +102,7 @@ inline void remote_control(void)
 				//				global_data.yaw_pos_setpoint = 0;
 
 				//switch on motors
-				global_data.status = MAV_STATE_ACTIVE;
+				global_data.state.status = MAV_STATE_ACTIVE;
 //				global_data.state.fly = FLY_WAIT_MOTORS;
 //				this will be done by setpoint
 				debug_message_buffer("MAV_STATE_ACTIVE Motors started");
@@ -113,7 +114,7 @@ inline void remote_control(void)
 					global_data.param[PARAM_PPM_YAW_CHANNEL]) > PPM_HIGH_TRIG))
 			{
 				//switch off motors
-				global_data.status = MAV_STATE_STANDBY;
+				global_data.state.status = MAV_STATE_STANDBY;
 
 				debug_message_buffer("MAV_STATE_STANDBY Motors off");
 
@@ -201,8 +202,8 @@ inline void remote_control(void)
 
 			//FOR NOW JUST TURN OFF MOTORS (WE HAVE A CABLE)
 			//FIXME Emergency Landing
-			global_data.mode = MAV_MODE_LOCKED;
-			global_data.status = MAV_STATE_STANDBY;
+			sys_set_mode(MAV_MODE_LOCKED);
+			global_data.state.status = MAV_STATE_STANDBY;
 
 			debug_message_buffer("EMERGENCY SWITCH OFF. No remote signal");
 		}

@@ -47,10 +47,16 @@
 // It is therefore sufficient to have the mainloop executions
 // guarded by the define switch, the C-files can be safely
 // compiled along.
+
+
 #include "mainloop_generic.h"
+#if PX_VEHICLE_TYPE == PX_AIRFRAME_FIXED_WING
 #include "mainloop_fixed_wing.h"
+#elif PX_VEHICLE_TYPE == PX_AIRFRAME_QUADROTOR
 #include "mainloop_quadrotor.h"
+#elif PX_VEHICLE_TYPE == PX_GROUND_CAR
 #include "mainloop_ground_car.h"
+#endif
 
 /**
 * @brief Main function

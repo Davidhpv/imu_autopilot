@@ -241,6 +241,7 @@ typedef struct
 	float mix_z_position;
 	float mix_yaw_position;
 	float mix_offset;
+	enum MAV_MODE mav_mode;
 	enum MAV_NAV nav_mode;
 	enum MAV_TYPE type;
 	enum MAV_STATE status;
@@ -302,8 +303,6 @@ struct global_struct
 	float gas_remote;
 	/*position error in body coordinates*/
 	float_vect3 position_error;
-	uint8_t mode;                             ///< Current vehicle mode
-	uint8_t status;                           ///< Current vehicle status
 	sys_state_t state;                        ///< Current vehicle state representation
 	uint8_t motor_block;                      ///< Position of motor block switch
 	uint16_t packet_drops;                    ///< Packet drop rate of receiving channels
@@ -629,8 +628,8 @@ static inline void global_data_reset_param_defaults(void){
  */
 static inline void global_data_reset(void)
 {
-	global_data.mode = MAV_MODE_UNINIT;
-	global_data.status = MAV_STATE_UNINIT;
+	global_data.state.mav_mode = MAV_MODE_UNINIT;
+	global_data.state.status = MAV_STATE_UNINIT;
 	global_data.cpu_usage = 0;
 	global_data.cpu_peak = 0;
 	global_data.rc_rssi = 0;

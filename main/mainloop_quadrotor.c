@@ -5,13 +5,17 @@
  *      Author: mackayl
  */
 
+
+#include "conf.h"
+
+#if PX_VEHICLE_TYPE == PX_AIRFRAME_QUADROTOR
+
 #include "mainloop_quadrotor.h"
 #include "common_mainloop_functions.h"
 #include "mainloop_generic.h"
 
 #include "inttypes.h"
 #include "mcu_init.h"
-#include "conf.h"
 
 // Include comm
 #include "comm.h"
@@ -110,6 +114,9 @@ void main_loop_quadrotor(void)
 
 	last_mainloop_idle = sys_time_clock_get_time_usec();
 	debug_message_buffer("Starting main loop");
+
+	led_off(LED_GREEN);
+	led_off(LED_RED);
 	while (1)
 	{
 		// Time Measurement
@@ -118,24 +125,38 @@ void main_loop_quadrotor(void)
 		///////////////////////////////////////////////////////////////////////////
 
 
-		if (global_data.mode == MAV_MODE_RC_TRAINING)
+		if (global_data.state.mav_mode == MAV_MODE_RC_TRAINING)
 		{
-			///////////////////////////////////////////////////////////////////////////
-			/// RC INTERFACE HACK AT 50 Hz
-			///////////////////////////////////////////////////////////////////////////
-			if (us_run_every(20000, COUNTER8, loop_start_time))
+			send_system_state();
+			static uint8_t uart_unconfigured = 1;
+			if (uart_unconfigured)
 			{
-				// Write start byte
-				uart1_transmit(0xFF);
+				// Mode for FMSPIC adapter
+				uart1_init(19200, COMM_UART_MODE, UART_FIFO_8);
+				uart_unconfigured = 0;
+			}
 
-				// Write channels 1-6
-				for (int i = 1; i < 7; i++)
+			while (1)
+			{
+				loop_start_time = sys_time_clock_get_time_usec();
+
+				///////////////////////////////////////////////////////////////////////////
+				/// RC INTERFACE HACK AT 50 Hz
+				///////////////////////////////////////////////////////////////////////////
+				if (us_run_every(20000, COUNTER8, loop_start_time))
 				{
-					uart1_transmit((radio_control_get_channel(1)+1)*127);
+					// Write start byte
+					uart1_transmit(0xFF);
+
+					// Write channels 1-8
+					// The format works with FMS and CRRCSim model flight simulators
+					for (int i = 1; i < 9; i++)
+					{
+						uart1_transmit(clamp((radio_control_get_channel(i)+1)*127, 0, 254));
+					}
+					led_toggle(LED_RED);
 				}
 			}
-			// Do not execute any of the functions below
-			continue;
 		}
 
 		///////////////////////////////////////////////////////////////////////////
@@ -287,8 +308,8 @@ void main_loop_quadrotor(void)
 			led_toggle(LED_RED); // just for green LED on alpha at the moment
 
 			// Toggle active mode led
-			if (global_data.mode == MAV_MODE_MANUAL || global_data.mode
-					== MAV_MODE_GUIDED || global_data.mode == MAV_MODE_AUTO)
+			if (global_data.state.mav_mode == MAV_MODE_MANUAL || global_data.state.mav_mode
+					== MAV_MODE_GUIDED || global_data.state.mav_mode == MAV_MODE_AUTO)
 			{
 				led_on(LED_GREEN);
 			}
@@ -459,7 +480,7 @@ void main_loop_quadrotor(void)
 		///////////////////////////////////////////////////////////////////////////
 		else if (us_run_every(5000, COUNTER5, loop_start_time))
 		{
-			if (global_data.status == MAV_STATE_STANDBY)
+			if (global_data.state.status == MAV_STATE_STANDBY)
 			{
 				//Check if parameters should be written or read
 				param_handler();
@@ -670,3 +691,5 @@ void update_controller_setpoints(void)
 
 	}
 }
+
+#endif

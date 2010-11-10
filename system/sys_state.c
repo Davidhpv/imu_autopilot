@@ -41,7 +41,7 @@
  */
 uint8_t sys_state_is_flying(void)
 {
-	if (global_data.status == MAV_STATE_STANDBY)
+	if (global_data.state.status == MAV_STATE_STANDBY || global_data.state.status == MAV_STATE_UNINIT)
 	{
 		return 0;
 	}
@@ -55,7 +55,7 @@ uint8_t sys_state_is_flying(void)
  */
 uint8_t sys_get_mode(void)
 {
-	return (uint8_t) global_data.mode;
+	return (uint8_t) global_data.state.mav_mode;
 }
 
 /**
@@ -66,43 +66,57 @@ bool sys_set_mode(uint8_t mode)
 {
 	if (mode == MAV_MODE_AUTO)
 	{
-		global_data.mode = MAV_MODE_AUTO;
+		global_data.state.mav_mode = MAV_MODE_AUTO;
 		return true;
 	}
 	else if (mode == MAV_MODE_GUIDED)
 	{
-		global_data.mode = MAV_MODE_GUIDED;
+		global_data.state.mav_mode = MAV_MODE_GUIDED;
 		return true;
 	}
 	else if (mode == MAV_MODE_LOCKED)
 	{
-		global_data.mode = MAV_MODE_LOCKED;
+		global_data.state.mav_mode = MAV_MODE_LOCKED;
 		return true;
 	}
 	else if (mode == MAV_MODE_MANUAL)
 	{
-		global_data.mode = MAV_MODE_MANUAL;
+		global_data.state.mav_mode = MAV_MODE_MANUAL;
 		return true;
 	}
 	else if (mode == MAV_MODE_READY)
 	{
-		global_data.mode = MAV_MODE_READY;
+		global_data.state.mav_mode = MAV_MODE_READY;
 		return true;
 	}
 	else if (mode == MAV_MODE_TEST1)
 	{
-		global_data.mode = MAV_MODE_TEST1;
+		global_data.state.mav_mode = MAV_MODE_TEST1;
 		return true;
 	}
 	else if (mode == MAV_MODE_TEST2)
 	{
-		global_data.mode = MAV_MODE_TEST2;
+		global_data.state.mav_mode = MAV_MODE_TEST2;
 		return true;
 	}
 	else if (mode == MAV_MODE_TEST3)
 	{
-		global_data.mode = MAV_MODE_TEST3;
+		global_data.state.mav_mode = MAV_MODE_TEST3;
 		return true;
+	}
+	else if (mode == MAV_MODE_RC_TRAINING)
+	{
+		// Only go into RC training if not flying
+		if (! sys_state_is_flying())
+		{
+			global_data.state.mav_mode = MAV_MODE_RC_TRAINING;
+			return true;
+		}
+		else
+		{
+			debug_message_buffer("WARNING: SYSTEM IS IN FLIGHT! Denied to switch to RC mode");
+			return false;
+		}
 	}
 	// UNINIT is not a mode that should be actively set
 	// it will thus be rejected like any other invalid mode
@@ -168,7 +182,7 @@ bool sys_set_state(uint8_t state)
 	}
 
 	// FIXME Remove this once new interface is existent
-	global_data.status = state;
+	global_data.state.status = state;
 
 }
 

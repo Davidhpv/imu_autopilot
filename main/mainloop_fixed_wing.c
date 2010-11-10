@@ -5,13 +5,16 @@
  *      Author: mackayl
  */
 
+#include "conf.h"
+
+#if PX_VEHICLE_TYPE == PX_AIRFRAME_FIXED_WING
+
 #include "mainloop_fixed_wing.h"
 #include "mainloop_generic.h"
 #include "common_mainloop_functions.h"
 
 #include "inttypes.h"
 #include "mcu_init.h"
-#include "conf.h"
 
 // Include comm
 #include "comm.h"
@@ -87,6 +90,8 @@ void main_loop_fixed_wing(void)
 					uart1_transmit((radio_control_get_channel(1)+1)*127);
 				}
 			}
+			led_toggle(LED_GREEN);
+			led_toggle(LED_RED);
 			// Do not execute any of the functions below
 			continue;
 		}
@@ -301,3 +306,4 @@ void main_loop_fixed_wing(void)
 
 }
 
+#endif

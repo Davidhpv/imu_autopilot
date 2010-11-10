@@ -24,7 +24,7 @@ void quadrotor_start_land_handler(uint64_t loop_start_time)
 	static uint32_t landing_counter = 0;
 
 	//STARTING
-	if ((global_data.status == MAV_STATE_ACTIVE || global_data.status
+	if ((global_data.state.status == MAV_STATE_ACTIVE || global_data.state.status
 			== MAV_STATE_CRITICAL) && global_data.state.fly == FLY_WAIT_MOTORS)
 	{
 		initial_wait_counter += 50;
@@ -141,7 +141,7 @@ void quadrotor_start_land_handler(uint64_t loop_start_time)
 		}
 	}
 
-	if (global_data.status == MAV_STATE_STANDBY)
+	if (global_data.state.status == MAV_STATE_STANDBY)
 	{
 		global_data.state.fly = FLY_GROUNDED;
 	}

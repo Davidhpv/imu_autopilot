@@ -5,13 +5,16 @@
  *      Author: mackayl
  */
 
+#include "conf.h"
+
+#if PX_VEHICLE_TYPE == PX_GROUND_CAR
+
 #include "mainloop_generic.h"
 #include "mainloop_ground_car.h"
 #include "common_mainloop_functions.h"
 
 #include "inttypes.h"
 #include "mcu_init.h"
-#include "conf.h"
 
 // Include comm
 #include "comm.h"
@@ -262,3 +265,4 @@ void main_loop_ground_car(void)
 
 }
 
+#endif

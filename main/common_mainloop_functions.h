@@ -43,6 +43,8 @@ void adc_read(void);
 void communication_send_controller_feedback(void);
 void communication_send_attitude_position(uint64_t loop_start_time);
 void communication_send_raw_data(uint64_t loop_start_time);
+/** @brief Send remote control values to GCS on request */
+void communication_send_remote_control(void);
 void handle_controller_timeouts(uint64_t loop_start_time);
 
 /** @brief Convert float parameters to faster uint ones */
@@ -55,8 +57,7 @@ uint8_t handle_reset_request(void);
 void handle_eeprom_write_request(void);
 /** @brief Convert normalized RC channel values to 0-255 */
 uint8_t rc_to_255(int chan);
-/** @brief Send remote control values to GCS on request */
-void communication_send_remote_control(void);
+
 
 /** @brief Measures the peak CPU load */
 uint16_t measure_peak_cpu_load(uint64_t loop_start_time, uint64_t loop_stop_time, uint64_t min_mainloop);

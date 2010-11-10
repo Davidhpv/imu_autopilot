@@ -31,8 +31,10 @@
 #define ACCELERATION_H_
 
 #include "conf.h"
+#include "arm7/spi.h"
 #include "sca3100.h"
 #include "sca3000.h"
+#include "global_data.h"
 
 static inline void acc_init(void)
 {
