@@ -590,10 +590,12 @@ void send_system_state(void)
 
 	// Send system status over both links
 	mavlink_msg_sys_status_send(MAVLINK_COMM_1, global_data.state.mav_mode, 0,
-			global_data.state.status, global_data.battery_voltage,
+			global_data.state.status,
+			global_data.cpu_usage, global_data.battery_voltage,
 			global_data.motor_block, global_data.packet_drops);
 	mavlink_msg_sys_status_send(MAVLINK_COMM_0, global_data.state.mav_mode, 0,
-			global_data.state.status, global_data.battery_voltage,
+			global_data.state.status,
+			global_data.cpu_usage, global_data.battery_voltage,
 			global_data.motor_block, global_data.packet_drops);
 
 	// Send auxiliary status over both links
